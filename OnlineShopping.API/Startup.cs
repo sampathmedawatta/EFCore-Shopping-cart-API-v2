@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using OnlineShopping.API.Exception;
 using OnlineShopping.Common.Options;
 using OnlineShopping.Data.Profiles;
 
@@ -39,8 +41,9 @@ namespace OnlineShopping.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,6 +60,8 @@ namespace OnlineShopping.API
             {
                 options.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
             });
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseCors(options => options.AllowAnyOrigin());
 

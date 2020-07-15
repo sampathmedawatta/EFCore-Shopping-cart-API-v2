@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Common;
@@ -14,16 +15,18 @@ namespace OnlineShopping.API.Controllers
     public class ProductController : ControllerBase
     {
         #region properties
-        ProductManager _productManager;
+        ProductManager productManager;
+        private readonly ILogger _logger;
 
         #endregion
-        public ProductController(IOptions<AppSettings> appSetting, IMapper mapper)
+        public ProductController(ILogger<ProductController> logger, IOptions<AppSettings> appSetting, IMapper mapper)
         {
             // handle exception and log
             // return error code and route Action Result
 
             AppSettings configSettings = appSetting.Value;
 
+            _logger = logger;
             ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
             {
                 ConnectionString = configSettings.ConnectionString
@@ -44,6 +47,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet()]
         public ActionResult<IEnumerable<ProductReadDto>> Get()
         {
+            _logger.LogInformation("this is sample log");
             //  TODO try catch check exception and return relevent response 404 200 201
             return Ok(_productManager.GetProducts());
         }
@@ -59,6 +63,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("{id:Guid}")]
         public ActionResult<ProductReadDto> Get(Guid id)
         {
+            _logger.LogInformation("this is sample log");
             //  TODO try catch check exception and return relevent response 404 200 201
             return Ok(_productManager.GetProductById(id));
         }
