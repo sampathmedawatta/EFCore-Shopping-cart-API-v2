@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Common;
@@ -13,12 +14,14 @@ namespace OnlineShopping.API.Controllers
     {
         #region properties
         ProductManager productManager;
+        private readonly ILogger _logger;
 
         #endregion
-        public ProductController(IOptions<AppSettings> appSetting, IMapper mapper)
+        public ProductController(ILogger<ProductController> logger, IOptions<AppSettings> appSetting, IMapper mapper)
         {
             AppSettings configSettings = appSetting.Value;
 
+            _logger = logger;
             ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
             {
                 ConnectionString = configSettings.ConnectionString
@@ -38,6 +41,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("ProductById/{id:Guid}")]
         public OperationResult Get(Guid id)
         {
+            _logger.LogInformation("this is sample log");
             OperationResult operationResult = productManager.GetAllProducts(id);
             return operationResult;
         }
@@ -52,6 +56,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("AllProducts")]
         public OperationResult Get()
         {
+            _logger.LogInformation("this is sample log");
             OperationResult operationResult = productManager.GetAllProducts(null);
             return operationResult;
         }
