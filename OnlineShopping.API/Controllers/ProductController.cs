@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Common;
+using OnlineShopping.Entity.Models.Product;
 using System;
+using System.Collections.Generic;
 
 namespace OnlineShopping.API.Controllers
 {
@@ -17,11 +19,8 @@ namespace OnlineShopping.API.Controllers
         #endregion
         public ProductController(IOptions<AppSettings> appSetting, IMapper mapper)
         {
-
-            // TODO DI for product manager
             // handle exception and log
             // return error code and route Action Result
-            // 
 
             AppSettings configSettings = appSetting.Value;
 
@@ -30,57 +29,53 @@ namespace OnlineShopping.API.Controllers
                 ConnectionString = configSettings.ConnectionString
             };
 
-            //TODO call from statup DI
+            // TODO DI for product manager
             this._productManager = new ProductManager(applicationConfiguration, mapper);
         }
 
 
+        /// <summary>
+        /// Method to get products
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        // GET: api/Product/
+
+        [HttpGet()]
+        public ActionResult<IEnumerable<ProductReadDto>> Get()
+        {
+            //  TODO try catch check exception and return relevent response 404 200 201
+            return Ok(_productManager.GetProducts());
+        }
 
         /// <summary>
         /// Method to get products
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // GET: api/GetAllProducts/id?A5010212-DBDF-4460-B4F5-2EAF139F254A
-
+        // GET: api/Product/id?A5010212-DBDF-4460-B4F5-2EAF139F254A
 
         // TODO change router to get
-        [HttpGet("ProductById/{id:Guid}")]
-        public OperationResult Get(Guid id)
+        [HttpGet("{id:Guid}")]
+        public ActionResult<ProductReadDto> Get(Guid id)
         {
-            //  TODO try catch
-            OperationResult operationResult = _productManager.GetAllProducts(id);
-
-            // TODO to change OK and Action result
-            return operationResult;
+            //  TODO try catch check exception and return relevent response 404 200 201
+            return Ok(_productManager.GetProductById(id));
         }
+
 
         /// <summary>
         /// Method to get products
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetAllProducts/
-
-        [HttpGet("AllProducts")]
-        public OperationResult Get()
-        {
-            OperationResult operationResult = _productManager.GetAllProducts(null);
-            return operationResult;
-        }
-
-        /// <summary>
-        /// Method to get products
-        /// </summary>
-        /// <param></param>
-        /// <returns></returns>
-        // GET: api/GetFeatureProducts/
+        // GET: api/Product/GetFeatureProducts/
 
         [HttpGet("FeatureProducts")]
-        public OperationResult GetFeatureProducts()
+        public ActionResult<IEnumerable<ProductReadDto>> GetFeatureProducts()
         {
-            OperationResult operationResult = _productManager.GetProductsByOptions("FeatureProducts");
-            return operationResult;
+            //  TODO try catch check exception and return relevent response 404 200 201
+            return Ok(_productManager.GetProductsByOptions("FeatureProducts"));
         }
 
 
@@ -89,13 +84,13 @@ namespace OnlineShopping.API.Controllers
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetHomePageProducts/
+        // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("HomePageProducts")]
-        public OperationResult GetHomePageProducts()
+        public ActionResult<IEnumerable<ProductReadDto>> GetHomePageProducts()
         {
-            OperationResult operationResult = _productManager.GetProductsByOptions("HomePageProducts");
-            return operationResult;
+            //  TODO try catch check exception and return relevent response 404 200 201
+            return Ok(_productManager.GetProductsByOptions("HomePageProducts"));
         }
 
         /// <summary>
@@ -103,13 +98,13 @@ namespace OnlineShopping.API.Controllers
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetHomePageProducts/
+        // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
-        public OperationResult GetAllByCategoryName(string CategoryName)
+        public ActionResult<IEnumerable<ProductReadDto>> GetAllByCategoryName(string CategoryName)
         {
-            OperationResult operationResult = _productManager.GetProductsByCategoryName(CategoryName);
-            return operationResult;
+            //  TODO try catch check exception and return relevent response 404 200 201
+            return Ok(_productManager.GetProductsByCategoryName(CategoryName));
         }
     }
 }

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineShopping.Business.Profiles;
 using OnlineShopping.Common.Options;
+using OnlineShopping.Data.Profiles;
 
 namespace OnlineShopping.API
 {

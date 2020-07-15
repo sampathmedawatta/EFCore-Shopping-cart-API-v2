@@ -1,79 +1,52 @@
 ﻿using AutoMapper;
 using OnlineShopping.Common;
-using OnlineShopping.Common.Models.Product;
+using OnlineShopping.Data.Data;
+using OnlineShopping.Entity.Models.Product;
 using System;
 using System.Collections.Generic;
-using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class ProductManager : BaseManager
+    public class ProductManager
     {
-        private readonly IMapper _mapper;
+        private readonly ApplicationConfiguration _applicationConfiguration;
 
-        public ProductManager(ApplicationConfiguration applicationConfiguration, IMapper mapper) : base(applicationConfiguration)
+        public IMapper _mapper { get; }
+
+        private ProductData productData;
+        public ProductData ProductData
         {
+            get
+            {
+                productData = productData ?? new ProductData(_applicationConfiguration, _mapper);
+                return productData;
+            }
+        }
+
+        public ProductManager(ApplicationConfiguration applicationConfiguration, IMapper mapper)
+        {
+            _applicationConfiguration = applicationConfiguration;
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// method get all products 
-        /// /// </summary>
-        /// <param name="id"> if if need to be filtered </param>
-        /// <returns></returns>
-
-        public OperationResult GetAllProducts(Guid? id)
+        public IEnumerable<ProductReadDto> GetProducts()
         {
-            // TODO handle the common error in the middleware 
-
-            // new operation result object to hold response data
-            OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
-
-            //check if id is available
-
-            // TODO move this to DATA ACCESS productData calss
-            if (id == null)
-            {
-                var productList = ProductRepository.GetAll();
-                operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
-            }
-            else
-            {
-
-                var product = ProductRepository.GetById((Guid)id);
-                operationResult.Data = _mapper.Map<ProductReadDto>(product);
-            }
-            return operationResult;
+            return ProductData.GetProducts();
         }
 
-        public OperationResult GetProductsByOptions(string option)
+        public ProductReadDto GetProductById(Guid id)
         {
-            // new operation result object to hold response data
-            OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
-
-            var productList = ProductRepository.GetAllByFilter(option);
-            operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
-
-
-            return operationResult;
+            return ProductData.GetById(id);
         }
 
-        public OperationResult GetProductsByCategoryName(string Name)
+        public IEnumerable<ProductReadDto> GetProductsByOptions(string option)
         {
-            // new operation result object to hold response data
-            OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
+            return ProductData.GetProductsByOptions(option);
+        }
 
-            var productList = ProductRepository.GetAllByCategoryName(Name);
-            operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
-
-
-            return operationResult;
+        public IEnumerable<ProductReadDto> GetProductsByCategoryName(string Name)
+        {
+            return ProductData.GetProductsByCategoryName(Name);
         }
     }
 }
