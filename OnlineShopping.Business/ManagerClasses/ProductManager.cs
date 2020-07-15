@@ -24,12 +24,16 @@ namespace OnlineShopping.Business.ManagerClasses
 
         public OperationResult GetAllProducts(Guid? id)
         {
+            // TODO handle the common error in the middleware 
+
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
             operationResult.Status = Enum.Status.Success;
             operationResult.Message = Constant.SuccessMessage;
 
             //check if id is available
+
+            // TODO move this to DATA ACCESS productData calss
             if (id == null)
             {
                 var productList = ProductRepository.GetAll();

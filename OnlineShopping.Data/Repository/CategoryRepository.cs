@@ -16,6 +16,11 @@ namespace OnlineShopping.Data.Repository
             this.context = context;
             table = context.Set<CategoryEntity>();
         }
+
+        /// <summary>
+        /// return active category list 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CategoryEntity> GetAll()
         {
             return table.Where(p => p.IsActive.Equals(true)).ToList();

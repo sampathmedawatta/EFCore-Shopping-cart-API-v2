@@ -5,6 +5,9 @@ namespace OnlineShopping.Data.Context
 {
     public class OnlineShoppingContext : DbContext
     {
+
+        // TODO use unitofWORK
+
         public readonly string _ConnectionString;
         public OnlineShoppingContext() { }
         public OnlineShoppingContext(string ConnectionString)

@@ -17,6 +17,10 @@ namespace OnlineShopping.Data.Repository
             table = context.Set<ProductEntiry>();
         }
 
+        /// <summary>
+        ///  retrun active product list
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ProductEntiry> GetAll()
         {
             return table
@@ -25,6 +29,12 @@ namespace OnlineShopping.Data.Repository
                 .Include(p => p.Picture)
                 .Where(p => p.IsActive.Equals(true)).ToList();
         }
+
+        /// <summary>
+        /// return product list by option 
+        /// </summary>
+        /// <param name="FilterBy"></param>
+        /// <returns></returns>
         public IEnumerable<ProductEntiry> GetAllByFilter(string FilterBy)
         {
 
@@ -51,6 +61,11 @@ namespace OnlineShopping.Data.Repository
             return null;
         }
 
+        /// <summary>
+        /// return product list by category name
+        /// </summary>
+        /// <param name="CategoryName"></param>
+        /// <returns></returns>
         public IEnumerable<ProductEntiry> GetAllByCategoryName(string CategoryName)
         {
 

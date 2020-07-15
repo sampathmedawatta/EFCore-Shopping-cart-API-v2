@@ -12,11 +12,17 @@ namespace OnlineShopping.API.Controllers
     public class ProductController : ControllerBase
     {
         #region properties
-        ProductManager productManager;
+        ProductManager _productManager;
 
         #endregion
         public ProductController(IOptions<AppSettings> appSetting, IMapper mapper)
         {
+
+            // TODO DI for product manager
+            // handle exception and log
+            // return error code and route Action Result
+            // 
+
             AppSettings configSettings = appSetting.Value;
 
             ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
@@ -24,7 +30,8 @@ namespace OnlineShopping.API.Controllers
                 ConnectionString = configSettings.ConnectionString
             };
 
-            this.productManager = new ProductManager(applicationConfiguration, mapper);
+            //TODO call from statup DI
+            this._productManager = new ProductManager(applicationConfiguration, mapper);
         }
 
 
@@ -35,10 +42,16 @@ namespace OnlineShopping.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: api/GetAllProducts/id?A5010212-DBDF-4460-B4F5-2EAF139F254A
+
+
+        // TODO change router to get
         [HttpGet("ProductById/{id:Guid}")]
         public OperationResult Get(Guid id)
         {
-            OperationResult operationResult = productManager.GetAllProducts(id);
+            //  TODO try catch
+            OperationResult operationResult = _productManager.GetAllProducts(id);
+
+            // TODO to change OK and Action result
             return operationResult;
         }
 
@@ -52,7 +65,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("AllProducts")]
         public OperationResult Get()
         {
-            OperationResult operationResult = productManager.GetAllProducts(null);
+            OperationResult operationResult = _productManager.GetAllProducts(null);
             return operationResult;
         }
 
@@ -66,7 +79,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("FeatureProducts")]
         public OperationResult GetFeatureProducts()
         {
-            OperationResult operationResult = productManager.GetProductsByOptions("FeatureProducts");
+            OperationResult operationResult = _productManager.GetProductsByOptions("FeatureProducts");
             return operationResult;
         }
 
@@ -81,7 +94,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("HomePageProducts")]
         public OperationResult GetHomePageProducts()
         {
-            OperationResult operationResult = productManager.GetProductsByOptions("HomePageProducts");
+            OperationResult operationResult = _productManager.GetProductsByOptions("HomePageProducts");
             return operationResult;
         }
 
@@ -95,7 +108,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
         public OperationResult GetAllByCategoryName(string CategoryName)
         {
-            OperationResult operationResult = productManager.GetProductsByCategoryName(CategoryName);
+            OperationResult operationResult = _productManager.GetProductsByCategoryName(CategoryName);
             return operationResult;
         }
     }
