@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using OnlineShopping.Common;
 using OnlineShopping.Common.Models.Category;
 using System;
@@ -7,11 +8,11 @@ using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class CategoryManager : BaseManager
+    public class CategoryManager : BaseManager, ICategoryManager
     {
         private readonly IMapper _mapper;
 
-        public CategoryManager(ApplicationConfiguration applicationConfiguration, IMapper mapper) : base(applicationConfiguration)
+        public CategoryManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting)
         {
             _mapper = mapper;
         }

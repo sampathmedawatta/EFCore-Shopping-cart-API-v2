@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using OnlineShopping.Common;
 using OnlineShopping.Common.Models.Product;
 using System;
@@ -7,11 +8,11 @@ using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class ProductManager : BaseManager
+    public class ProductManager : BaseManager, IProductManager
     {
         private readonly IMapper _mapper;
 
-        public ProductManager(ApplicationConfiguration applicationConfiguration, IMapper mapper) : base(applicationConfiguration)
+        public ProductManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting)
         {
             _mapper = mapper;
         }

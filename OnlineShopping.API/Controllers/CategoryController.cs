@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Common;
 
@@ -11,21 +11,16 @@ namespace OnlineShopping.API.Controllers
     public class CategoryController : ControllerBase
     {
 
-        #region properties
-        CategoryManager categoryManager;
 
+        #region properties
+        private readonly ICategoryManager _categoryManager;
+        private readonly ILogger _logger;
         #endregion
 
-        public CategoryController(IOptions<AppSettings> appSetting, IMapper mapper)
+        public CategoryController(ICategoryManager categoryManager, ILogger<ProductController> logger, IMapper mapper)
         {
-            AppSettings configSettings = appSetting.Value;
-
-            ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
-            {
-                ConnectionString = configSettings.ConnectionString
-            };
-
-            this.categoryManager = new CategoryManager(applicationConfiguration, mapper);
+            _categoryManager = categoryManager;
+            _logger = logger;
         }
 
 
@@ -39,7 +34,8 @@ namespace OnlineShopping.API.Controllers
         [HttpGet]
         public OperationResult Get()
         {
-            OperationResult operationResult = categoryManager.GetAllCategories(null);
+            _logger.LogInformation("this is sample log");
+            OperationResult operationResult = _categoryManager.GetAllCategories(null);
             return operationResult;
         }
     }

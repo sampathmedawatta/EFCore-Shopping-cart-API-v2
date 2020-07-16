@@ -1,4 +1,4 @@
-﻿namespace OnlineShopping.API
+﻿namespace OnlineShopping.Common
 {
     public class AppSettings
     {

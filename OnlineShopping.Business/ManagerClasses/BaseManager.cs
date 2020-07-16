@@ -1,10 +1,11 @@
-﻿using OnlineShopping.Common;
+﻿using Microsoft.Extensions.Options;
+using OnlineShopping.Common;
 using OnlineShopping.Data.Context;
 using OnlineShopping.Data.Repository;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class BaseManager
+    public class BaseManager : IBaseManager
     {
         private readonly string ConnectionString;
         #region Private Properties
@@ -17,9 +18,10 @@ namespace OnlineShopping.Business.ManagerClasses
                 return new OnlineShoppingContext(ConnectionString);
             }
         }
-        public BaseManager(ApplicationConfiguration applicationConfiguration)
+        public BaseManager(IOptions<AppSettings> appSetting)
         {
-            ConnectionString = applicationConfiguration.ConnectionString;
+            AppSettings configSettings = appSetting.Value;
+            ConnectionString = configSettings.ConnectionString;
         }
         #endregion
         #region Public Properties
