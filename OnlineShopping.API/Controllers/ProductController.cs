@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Common;
 using System;
@@ -12,22 +11,18 @@ namespace OnlineShopping.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly IProductManager _productManager;
         #region properties
-        ProductManager productManager;
+
         private readonly ILogger _logger;
 
         #endregion
-        public ProductController(ILogger<ProductController> logger, IOptions<AppSettings> appSetting, IMapper mapper)
+        public ProductController(IProductManager productManager, ILogger<ProductController> logger, IMapper mapper)
         {
-            AppSettings configSettings = appSetting.Value;
-
+            _productManager = productManager;
             _logger = logger;
-            ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
-            {
-                ConnectionString = configSettings.ConnectionString
-            };
 
-            this.productManager = new ProductManager(applicationConfiguration, mapper);
+            // this.productManager = new ProductManager(applicationConfiguration, mapper);
         }
 
 
@@ -42,7 +37,7 @@ namespace OnlineShopping.API.Controllers
         public OperationResult Get(Guid id)
         {
             _logger.LogInformation("this is sample log");
-            OperationResult operationResult = productManager.GetAllProducts(id);
+            OperationResult operationResult = _productManager.GetAllProducts(id);
             return operationResult;
         }
 
@@ -57,7 +52,7 @@ namespace OnlineShopping.API.Controllers
         public OperationResult Get()
         {
             _logger.LogInformation("this is sample log");
-            OperationResult operationResult = productManager.GetAllProducts(null);
+            OperationResult operationResult = _productManager.GetAllProducts(null);
             return operationResult;
         }
 
@@ -71,7 +66,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("FeatureProducts")]
         public OperationResult GetFeatureProducts()
         {
-            OperationResult operationResult = productManager.GetProductsByOptions("FeatureProducts");
+            OperationResult operationResult = _productManager.GetProductsByOptions("FeatureProducts");
             return operationResult;
         }
 
@@ -86,7 +81,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("HomePageProducts")]
         public OperationResult GetHomePageProducts()
         {
-            OperationResult operationResult = productManager.GetProductsByOptions("HomePageProducts");
+            OperationResult operationResult = _productManager.GetProductsByOptions("HomePageProducts");
             return operationResult;
         }
 
@@ -100,7 +95,7 @@ namespace OnlineShopping.API.Controllers
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
         public OperationResult GetAllByCategoryName(string CategoryName)
         {
-            OperationResult operationResult = productManager.GetProductsByCategoryName(CategoryName);
+            OperationResult operationResult = _productManager.GetProductsByCategoryName(CategoryName);
             return operationResult;
         }
     }
