@@ -21,12 +21,6 @@ namespace OnlineShopping.Business.ManagerClasses
         public BaseManager(IOptions<AppSettings> appSetting)
         {
             AppSettings configSettings = appSetting.Value;
-
-            //ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration
-            //{
-            //    ConnectionString = configSettings.ConnectionString
-            //};
-
             ConnectionString = configSettings.ConnectionString;
         }
         #endregion

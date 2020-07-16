@@ -11,9 +11,9 @@ namespace OnlineShopping.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductManager _productManager;
-        #region properties
 
+        #region properties
+        private readonly IProductManager _productManager;
         private readonly ILogger _logger;
 
         #endregion
@@ -22,7 +22,6 @@ namespace OnlineShopping.API.Controllers
             _productManager = productManager;
             _logger = logger;
 
-            // this.productManager = new ProductManager(applicationConfiguration, mapper);
         }
 
 

@@ -14,8 +14,6 @@ namespace OnlineShopping.Business.ManagerClasses
 
         public ProductManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting)
         {
-
-
             _mapper = mapper;
         }
 
