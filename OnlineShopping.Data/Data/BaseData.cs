@@ -9,6 +9,8 @@ namespace OnlineShopping.Data.Data
         #region Private Properties
         private ProductRepository productRepository;
         private CategoryRepository categoryRepository;
+        private UserRepository userRepository;
+        private UserPasswordRepository userPasswordRepository;
         private OnlineShoppingContext Context
         {
             get
@@ -47,6 +49,30 @@ namespace OnlineShopping.Data.Data
             {
                 categoryRepository = categoryRepository ?? new CategoryRepository(Context);
                 return categoryRepository;
+            }
+        }
+
+        /// <summary>
+        /// User Repository Public Property
+        /// </summary>
+        public UserRepository UserRepository
+        {
+            get
+            {
+                userRepository = userRepository ?? new UserRepository(Context);
+                return userRepository;
+            }
+        }
+
+        /// <summary>
+        /// User Repository Public Property
+        /// </summary>
+        public UserPasswordRepository UserPasswordRepository
+        {
+            get
+            {
+                userPasswordRepository = userPasswordRepository ?? new UserPasswordRepository(Context);
+                return userPasswordRepository;
             }
         }
         #endregion

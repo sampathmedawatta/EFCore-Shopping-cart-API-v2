@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using OnlineShopping.API.Exception;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Business.ManagerClasses;
+using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Business.Profiles;
 using OnlineShopping.Common;
 using OnlineShopping.Common.Options;
@@ -31,6 +32,8 @@ namespace OnlineShopping.API
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<ICategoryManager, CategoryManager>();
+            services.AddScoped<IUserManager, UserManager>();
+
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddSwaggerGen(x =>

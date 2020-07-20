@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
@@ -17,7 +16,7 @@ namespace OnlineShopping.API.Controllers
         private readonly ILogger _logger;
 
         #endregion
-        public ProductController(IProductManager productManager, ILogger<ProductController> logger, IMapper mapper)
+        public ProductController(IProductManager productManager, ILogger<ProductController> logger)
         {
             _productManager = productManager;
             _logger = logger;
