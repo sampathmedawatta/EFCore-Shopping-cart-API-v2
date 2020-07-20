@@ -1,7 +1,7 @@
 ﻿using OnlineShopping.Common;
 using System;
 
-namespace OnlineShopping.Business.ManagerClasses
+namespace OnlineShopping.Business.Interfaces.ManagerClasses
 {
     public interface IProductManager : IBaseManager
     {

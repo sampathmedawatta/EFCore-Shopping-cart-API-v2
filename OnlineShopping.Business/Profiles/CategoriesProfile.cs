@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OnlineShopping.Common.Models.Category;
 using OnlineShopping.Data.Entity;
+using OnlineShopping.Entity.Models.Category;
 
 namespace OnlineShopping.Business.Profiles
 {

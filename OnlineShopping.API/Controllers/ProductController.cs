@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OnlineShopping.Business.ManagerClasses;
+using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 using System;
 
@@ -32,7 +32,7 @@ namespace OnlineShopping.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: api/GetAllProducts/id?A5010212-DBDF-4460-B4F5-2EAF139F254A
-        [HttpGet("ProductById/{id:Guid}")]
+        [HttpGet("{id:Guid}")]
         public OperationResult Get(Guid id)
         {
             _logger.LogInformation("this is sample log");
@@ -47,7 +47,7 @@ namespace OnlineShopping.API.Controllers
         /// <returns></returns>
         // GET: api/GetAllProducts/
 
-        [HttpGet("AllProducts")]
+        [HttpGet()]
         public OperationResult Get()
         {
             _logger.LogInformation("this is sample log");

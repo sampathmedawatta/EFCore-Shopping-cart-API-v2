@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnlineShopping.Common.Models.Category
+namespace OnlineShopping.Entity.Models.Category
 {
     public class CategoryReadDto
     {

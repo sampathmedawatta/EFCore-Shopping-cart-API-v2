@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OnlineShopping.Business.ManagerClasses;
+using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 
 namespace OnlineShopping.API.Controllers

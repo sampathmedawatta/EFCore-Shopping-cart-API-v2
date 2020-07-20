@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Context;
 using OnlineShopping.Data.Repository;
