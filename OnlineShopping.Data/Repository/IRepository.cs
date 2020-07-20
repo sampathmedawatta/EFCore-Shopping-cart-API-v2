@@ -10,7 +10,7 @@ namespace OnlineShopping.Data.Repository
         Task<IEnumerable<T>> GetAllAsunc();
 
         Task<T> GetByIdAsunc(Guid id);
-        void Insert(T entity);
+        Task<int> Insert(T entity);
         void Update(T entity);
         void Delete(Guid id);
     }

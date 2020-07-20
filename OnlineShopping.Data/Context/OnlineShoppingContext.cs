@@ -11,9 +11,10 @@ namespace OnlineShopping.Data.Context
         {
             _ConnectionString = ConnectionString;
         }
-
+        public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ProductEntiry> Products { get; set; }
         public DbSet<CustomerEntry> Customers { get; set; }
+        public DbSet<CustomerPasswordEntry> CustomerPasswords { get; set; }
         public DbSet<CustomerRoleEntry> CustomerRoles { get; set; }
         public DbSet<PaymentMethodEntry> PaymentMethods { get; set; }
         public DbSet<OrderEntry> Orders { get; set; }

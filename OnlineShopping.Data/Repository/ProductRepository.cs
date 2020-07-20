@@ -69,9 +69,12 @@ namespace OnlineShopping.Data.Repository
             return await table.FindAsync(id);
         }
 
-        public void Insert(ProductEntiry entity)
+        public async Task<int> Insert(ProductEntiry entity)
         {
-            table.Add(entity);
+            this.context.Products.Add(entity);
+            int excecutedRows = await this.context.SaveChangesAsync();
+
+            return excecutedRows;
         }
 
         public void Update(ProductEntiry entity)

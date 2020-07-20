@@ -12,6 +12,8 @@ namespace OnlineShopping.Business.ManagerClasses
 
         private ProductData productData;
         private CategoryData categoryData;
+        private UserData userData;
+
         private readonly string ConnectionString;
         private IMapper _mapper { get; }
 
@@ -25,7 +27,7 @@ namespace OnlineShopping.Business.ManagerClasses
         #region Public Properties
 
         /// <summary>
-        /// Product Repository Public Property
+        /// Product Data Public Property
         /// </summary>
         public ProductData ProductData
         {
@@ -37,7 +39,7 @@ namespace OnlineShopping.Business.ManagerClasses
         }
 
         /// <summary>
-        /// Product Repository Public Property
+        /// Category Data Public Property
         /// </summary>
         public CategoryData CategoryData
         {
@@ -45,6 +47,18 @@ namespace OnlineShopping.Business.ManagerClasses
             {
                 categoryData = categoryData ?? new CategoryData(ConnectionString, _mapper);
                 return categoryData;
+            }
+        }
+
+        /// <summary>
+        /// User Data Public Property
+        /// </summary>
+        public UserData UserData
+        {
+            get
+            {
+                userData = userData ?? new UserData(ConnectionString, _mapper);
+                return userData;
             }
         }
         #endregion
