@@ -15,12 +15,11 @@ namespace OnlineShopping.API.Controllers
         private readonly IUserManager _userManager;
         private readonly ILogger _logger;
 
-        public UserController(IUserManager userManager, ILogger<ProductController> logger)
+        public UserController(IUserManager userManager, ILogger<UserController> logger)
         {
 
             _userManager = userManager;
             _logger = logger;
-
         }
 
         [AllowAnonymous]
@@ -30,6 +29,9 @@ namespace OnlineShopping.API.Controllers
         {
             _logger.LogInformation("Create new user");
             var operationResult = await _userManager.CreateUserAsunc(userCreateDto);
+
+
+
 
             return Ok(operationResult);
         }
