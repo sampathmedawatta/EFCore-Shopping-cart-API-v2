@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using OnlineShopping.Common.Models.Product;
+using OnlineShopping.Entity.Models.Product;
 using System;
 using System.Collections.Generic;
 using Enum = OnlineShopping.Common.Enum;

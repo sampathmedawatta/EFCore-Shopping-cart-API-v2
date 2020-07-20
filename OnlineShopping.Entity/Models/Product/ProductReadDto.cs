@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnlineShopping.Common.Models.Product
+namespace OnlineShopping.Entity.Models.Product
 {
     public class ProductReadDto
     {

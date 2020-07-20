@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.API.Exception;
+using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Business.Profiles;
 using OnlineShopping.Common;
