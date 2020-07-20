@@ -13,9 +13,9 @@ namespace OnlineShopping.Data.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CategoryReadDto>> GetCategories()
+        public async Task<IEnumerable<CategoryReadDto>> GetCategoriesAsunc()
         {
-            var productList = await CategoryRepository.GetAll();
+            var productList = await CategoryRepository.GetAllAsunc();
             return _mapper.Map<IEnumerable<CategoryReadDto>>(productList);
 
         }

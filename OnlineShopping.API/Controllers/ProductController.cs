@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.API.Controllers
 {
@@ -32,11 +33,17 @@ namespace OnlineShopping.API.Controllers
         /// <returns></returns>
         // GET: api/Product
         [HttpGet()]
-        public OperationResult Get()
+        public async Task<ActionResult<OperationResult>> GetAsunc()
         {
             _logger.LogInformation("Get Product List");
-            OperationResult operationResult = _productManager.GetProducts();
-            return operationResult;
+            var operationResult = await _productManager.GetProductsAsunc();
+
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
+
         }
 
 
@@ -48,10 +55,14 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetFeatureProducts/
 
         [HttpGet("FeatureProducts")]
-        public OperationResult GetFeatureProducts()
+        public async Task<ActionResult<OperationResult>> GetFeatureProductsAsunc()
         {
-            OperationResult operationResult = _productManager.GetProductsByOptions("FeatureProducts");
-            return operationResult;
+            var operationResult = await _productManager.GetProductsByOptionsAsunc("FeatureProducts");
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
         }
 
 
@@ -63,10 +74,14 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("HomePageProducts")]
-        public OperationResult GetHomePageProducts()
+        public async Task<ActionResult<OperationResult>> GetHomePageProductsAsunc()
         {
-            OperationResult operationResult = _productManager.GetProductsByOptions("HomePageProducts");
-            return operationResult;
+            var operationResult = await _productManager.GetProductsByOptionsAsunc("HomePageProducts");
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
         }
 
         /// <summary>
@@ -77,10 +92,14 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
-        public OperationResult GetAllByCategoryName(string CategoryName)
+        public async Task<ActionResult<OperationResult>> GetAllByCategoryNameAsunc(string CategoryName)
         {
-            OperationResult operationResult = _productManager.GetProductsByCategoryName(CategoryName);
-            return operationResult;
+            var operationResult = await _productManager.GetProductsByCategoryNameAsunc(CategoryName);
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
         }
     }
 }

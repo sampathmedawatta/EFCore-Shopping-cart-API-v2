@@ -33,11 +33,11 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Category/
 
         [HttpGet]
-        public async Task<ActionResult<OperationResult>> Get()
+        public async Task<ActionResult<OperationResult>> GetAsunc()
         {
 
             _logger.LogInformation("Get Category List");
-            var operationResult = await _categoryManager.GetCategories();
+            var operationResult = await _categoryManager.GetCategoriesAsunc();
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);

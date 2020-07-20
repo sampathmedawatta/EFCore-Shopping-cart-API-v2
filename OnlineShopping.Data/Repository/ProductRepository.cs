@@ -18,7 +18,7 @@ namespace OnlineShopping.Data.Repository
             table = context.Set<ProductEntiry>();
         }
 
-        public async Task<IEnumerable<ProductEntiry>> GetAll()
+        public async Task<IEnumerable<ProductEntiry>> GetAllAsunc()
         {
             return await table
                 .Include(c => c.Category)
@@ -26,47 +26,47 @@ namespace OnlineShopping.Data.Repository
                 .Include(p => p.Picture)
                 .Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
-        public IEnumerable<ProductEntiry> GetAllByFilter(string FilterBy)
+        public async Task<IEnumerable<ProductEntiry>> GetAllByFilterAsunc(string FilterBy)
         {
 
             if (FilterBy.Equals("FeatureProducts"))
             {
-                return table
+                return await table
                   .Include(c => c.Category)
                   .Include(u => u.UnitType)
                   .Include(p => p.Picture)
                   .Where(p => p.IsActive.Equals(true))
                   .Where(p => p.IsFeatureProduct.Equals(true))
-                  .ToList();
+                  .ToListAsync();
             }
             else if (FilterBy.Equals("HomePageProducts"))
             {
-                return table
+                return await table
                .Include(c => c.Category)
                .Include(u => u.UnitType)
                .Include(p => p.Picture)
                .Where(p => p.ShowInHomePage.Equals(true))
-               .Where(p => p.IsActive.Equals(true)).ToList();
+               .Where(p => p.IsActive.Equals(true)).ToListAsync();
             }
 
             return null;
         }
 
-        public IEnumerable<ProductEntiry> GetAllByCategoryName(string CategoryName)
+        public async Task<IEnumerable<ProductEntiry>> GetAllByCategoryNameAsunc(string CategoryName)
         {
 
-            return table
+            return await table
                .Include(c => c.Category)
                .Include(u => u.UnitType)
                .Include(p => p.Picture)
                .Where(ct => ct.Category.Name.Equals(CategoryName))
-               .Where(p => p.IsActive.Equals(true)).ToList();
+               .Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
 
 
-        public ProductEntiry GetById(Guid id)
+        public async Task<ProductEntiry> GetByIdAsunc(Guid id)
         {
-            return table.Find(id);
+            return await table.FindAsync(id);
         }
 
         public void Insert(ProductEntiry entity)

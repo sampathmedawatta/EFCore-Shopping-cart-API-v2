@@ -1,11 +1,13 @@
 ﻿using OnlineShopping.Common;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.Interfaces.ManagerClasses
 {
     public interface IProductManager
     {
-        OperationResult GetProducts();
-        OperationResult GetProductsByOptions(string option);
-        OperationResult GetProductsByCategoryName(string Name);
+        Task<OperationResult> GetProductsAsunc();
+        Task<OperationResult> GetProductsByOptionsAsunc(string option);
+        Task<OperationResult> GetProductsByCategoryNameAsunc(string Name);
+
     }
 }

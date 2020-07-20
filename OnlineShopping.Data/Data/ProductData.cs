@@ -2,6 +2,7 @@
 using OnlineShopping.Entity.Models.Product;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Data
 {
@@ -13,34 +14,32 @@ namespace OnlineShopping.Data.Data
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductReadDto> GetProducts()
+        public async Task<IEnumerable<ProductReadDto>> GetProductsAsunc()
         {
-            var productList = ProductRepository.GetAll();
-            _mapper.Map<IEnumerable<ProductReadDto>>(productList);
+            var productList = await ProductRepository.GetAllAsunc();
+            return _mapper.Map<IEnumerable<ProductReadDto>>(productList);
 
-            //generate return message
-            return null;
         }
 
-        public ProductReadDto GetById(Guid id)
+        public async Task<ProductReadDto> GetByIdAsunc(Guid id)
         {
             // TODO handle the common error in the middleware 
 
-            var product = ProductRepository.GetById(id);
+            var product = await ProductRepository.GetByIdAsunc(id);
             return _mapper.Map<ProductReadDto>(product);
         }
 
-        public IEnumerable<ProductReadDto> GetProductsByOptions(string option)
+        public async Task<IEnumerable<ProductReadDto>> GetProductsByOptionsAsunc(string option)
         {
             // TODO handle the common error in the middleware 
-            var productList = ProductRepository.GetAllByFilter(option);
+            var productList = await ProductRepository.GetAllByFilterAsunc(option);
             return _mapper.Map<IEnumerable<ProductReadDto>>(productList);
         }
 
-        public IEnumerable<ProductReadDto> GetProductsByCategoryName(string Name)
+        public async Task<IEnumerable<ProductReadDto>> GetProductsByCategoryNameAsunc(string Name)
         {
             // TODO handle the common error in the middleware 
-            var productList = ProductRepository.GetAllByCategoryName(Name);
+            var productList = await ProductRepository.GetAllByCategoryNameAsunc(Name);
             return _mapper.Map<IEnumerable<ProductReadDto>>(productList);
         }
     }

@@ -17,15 +17,15 @@ namespace OnlineShopping.Data.Repository
             this.context = context;
             table = context.Set<CategoryEntity>();
         }
-        public async Task<IEnumerable<CategoryEntity>> GetAll()
+        public async Task<IEnumerable<CategoryEntity>> GetAllAsunc()
         {
             return await table.Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
 
 
-        public CategoryEntity GetById(Guid id)
+        public async Task<CategoryEntity> GetByIdAsunc(Guid id)
         {
-            return table.Find(id);
+            return await table.FindAsync(id);
         }
 
         public void Insert(CategoryEntity entity)

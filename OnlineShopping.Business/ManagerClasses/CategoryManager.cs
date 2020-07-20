@@ -13,23 +13,24 @@ namespace OnlineShopping.Business.ManagerClasses
         {
         }
 
-        /// <summary>
-        /// method get all products 
-        /// /// </summary>
-        /// <param name="id"> if if need to be filtered </param>
-        /// <returns></returns>
-
-        public async Task<OperationResult> GetCategories()
+        public async Task<OperationResult> GetCategoriesAsunc()
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await CategoryData.GetCategories();
+            operationResult.Data = await CategoryData.GetCategoriesAsunc();
 
+            return validateResult(operationResult);
+
+        }
+
+        private OperationResult validateResult(OperationResult operationResult)
+        {
             if (operationResult.Data == null)
             {
                 operationResult.StatusId = 400;
                 operationResult.Status = Enum.Status.Error;
                 operationResult.Message = Constant.FailMessage;
+                operationResult.Error = "No Records Found";
             }
             else
             {
@@ -37,9 +38,7 @@ namespace OnlineShopping.Business.ManagerClasses
                 operationResult.Status = Enum.Status.Success;
                 operationResult.Message = Constant.SuccessMessage;
             }
-
             return operationResult;
-
         }
 
     }
