@@ -9,5 +9,6 @@
         /// SuccessMessage
         /// </summary>
         public static readonly string SuccessMessage = "Success";
+        public static readonly string FailMessage = "Error";
     }
 }

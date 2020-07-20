@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.API.Controllers
 {
@@ -32,11 +33,19 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Category/
 
         [HttpGet]
-        public OperationResult Get()
+        public async Task<ActionResult<OperationResult>> Get()
         {
-            _logger.LogInformation("this is sample log");
-            OperationResult operationResult = _categoryManager.GetAllCategories(null);
-            return operationResult;
+
+            _logger.LogInformation("Get Category List");
+            var operationResult = await _categoryManager.GetCategories();
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
+
         }
+
+
     }
 }

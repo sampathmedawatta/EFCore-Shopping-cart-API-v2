@@ -1,10 +1,10 @@
 ﻿using OnlineShopping.Common;
-using System;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.Interfaces.ManagerClasses
 {
     public interface ICategoryManager
     {
-        OperationResult GetAllCategories(Guid? id);
+        Task<OperationResult> GetCategories();
     }
 }

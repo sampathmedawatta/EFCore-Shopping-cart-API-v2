@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using System;
 
 namespace OnlineShopping.API.Controllers
 {
@@ -29,38 +28,24 @@ namespace OnlineShopping.API.Controllers
         /// <summary>
         /// Method to get products
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // GET: api/GetAllProducts/id?A5010212-DBDF-4460-B4F5-2EAF139F254A
-        [HttpGet("{id:Guid}")]
-        public OperationResult Get(Guid id)
-        {
-            _logger.LogInformation("this is sample log");
-            OperationResult operationResult = _productManager.GetAllProducts(id);
-            return operationResult;
-        }
-
-        /// <summary>
-        /// Method to get products
-        /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetAllProducts/
-
+        // GET: api/Product
         [HttpGet()]
         public OperationResult Get()
         {
-            _logger.LogInformation("this is sample log");
-            OperationResult operationResult = _productManager.GetAllProducts(null);
+            _logger.LogInformation("Get Product List");
+            OperationResult operationResult = _productManager.GetProducts();
             return operationResult;
         }
 
+
         /// <summary>
-        /// Method to get products
+        /// Method to get Feature products
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetFeatureProducts/
+        // GET: api/Product/GetFeatureProducts/
 
         [HttpGet("FeatureProducts")]
         public OperationResult GetFeatureProducts()
@@ -71,11 +56,11 @@ namespace OnlineShopping.API.Controllers
 
 
         /// <summary>
-        /// Method to get products
+        /// Method to get Home Page products
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetHomePageProducts/
+        // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("HomePageProducts")]
         public OperationResult GetHomePageProducts()
@@ -89,7 +74,7 @@ namespace OnlineShopping.API.Controllers
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/GetHomePageProducts/
+        // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
         public OperationResult GetAllByCategoryName(string CategoryName)

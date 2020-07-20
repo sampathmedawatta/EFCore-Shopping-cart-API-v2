@@ -1,28 +1,25 @@
-﻿using Microsoft.Extensions.Options;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using OnlineShopping.Data.Context;
-using OnlineShopping.Data.Repository;
+using OnlineShopping.Data.Data;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
     public class BaseManager : IBaseManager
     {
-        private readonly string ConnectionString;
         #region Private Properties
-        private ProductRepository productRepository;
-        private CategoryRepository categoryRepository;
-        private OnlineShoppingContext Context
-        {
-            get
-            {
-                return new OnlineShoppingContext(ConnectionString);
-            }
-        }
-        public BaseManager(IOptions<AppSettings> appSetting)
+
+        private ProductData productData;
+        private CategoryData categoryData;
+        private readonly string ConnectionString;
+        private IMapper _mapper { get; }
+
+        public BaseManager(IOptions<AppSettings> appSetting, IMapper mapper)
         {
             AppSettings configSettings = appSetting.Value;
             ConnectionString = configSettings.ConnectionString;
+            _mapper = mapper;
         }
         #endregion
         #region Public Properties
@@ -30,24 +27,24 @@ namespace OnlineShopping.Business.ManagerClasses
         /// <summary>
         /// Product Repository Public Property
         /// </summary>
-        public ProductRepository ProductRepository
+        public ProductData ProductData
         {
             get
             {
-                productRepository = productRepository ?? new ProductRepository(Context);
-                return productRepository;
+                productData = productData ?? new ProductData(ConnectionString, _mapper);
+                return productData;
             }
         }
 
         /// <summary>
         /// Product Repository Public Property
         /// </summary>
-        public CategoryRepository CategoryRepository
+        public CategoryData CategoryData
         {
             get
             {
-                categoryRepository = categoryRepository ?? new CategoryRepository(Context);
-                return categoryRepository;
+                categoryData = categoryData ?? new CategoryData(ConnectionString, _mapper);
+                return categoryData;
             }
         }
         #endregion

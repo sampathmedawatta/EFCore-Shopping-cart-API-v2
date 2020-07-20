@@ -17,5 +17,14 @@
             Warning = 3
         }
 
+        /// <summary>
+        /// Application Status Id
+        /// </summary>
+        public enum StatusId
+        {
+            Success = 200,
+            NoRecords = 400
+
+        }
     }
 }

@@ -4,6 +4,7 @@ using OnlineShopping.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository
 {
@@ -16,9 +17,9 @@ namespace OnlineShopping.Data.Repository
             this.context = context;
             table = context.Set<CategoryEntity>();
         }
-        public IEnumerable<CategoryEntity> GetAll()
+        public async Task<IEnumerable<CategoryEntity>> GetAll()
         {
-            return table.Where(p => p.IsActive.Equals(true)).ToList();
+            return await table.Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
 
 

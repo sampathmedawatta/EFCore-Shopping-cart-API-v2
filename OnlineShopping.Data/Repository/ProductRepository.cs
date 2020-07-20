@@ -4,6 +4,7 @@ using OnlineShopping.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository
 {
@@ -17,13 +18,13 @@ namespace OnlineShopping.Data.Repository
             table = context.Set<ProductEntiry>();
         }
 
-        public IEnumerable<ProductEntiry> GetAll()
+        public async Task<IEnumerable<ProductEntiry>> GetAll()
         {
-            return table
+            return await table
                 .Include(c => c.Category)
                 .Include(u => u.UnitType)
                 .Include(p => p.Picture)
-                .Where(p => p.IsActive.Equals(true)).ToList();
+                .Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
         public IEnumerable<ProductEntiry> GetAllByFilter(string FilterBy)
         {
