@@ -2,46 +2,41 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using OnlineShopping.Entity.Models.Category;
-using System;
-using System.Collections.Generic;
-using Enum = OnlineShopping.Common.Enum;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
     public class CategoryManager : BaseManager, ICategoryManager
     {
-        private readonly IMapper _mapper;
 
-        public CategoryManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting)
+        public CategoryManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting, mapper)
         {
-            _mapper = mapper;
         }
 
-        /// <summary>
-        /// method get all products 
-        /// /// </summary>
-        /// <param name="id"> if if need to be filtered </param>
-        /// <returns></returns>
-
-        public OperationResult GetAllCategories(Guid? id)
+        public async Task<OperationResult> GetCategoriesAsunc()
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
+            operationResult.Data = await CategoryData.GetCategoriesAsunc();
 
-            //check if id is available
-            if (id == null)
+            return validateResult(operationResult);
+
+        }
+
+        private OperationResult validateResult(OperationResult operationResult)
+        {
+            if (operationResult.Data == null)
             {
-                var productList = CategoryRepository.GetAll();
-                operationResult.Data = _mapper.Map<IEnumerable<CategoryReadDto>>(productList);
+                operationResult.StatusId = 400;
+                operationResult.Status = Enum.Status.Error;
+                operationResult.Message = Constant.FailMessage;
+                operationResult.Error = "No Records Found";
             }
             else
             {
-
-                var product = CategoryRepository.GetById((Guid)id);
-                operationResult.Data = _mapper.Map<CategoryReadDto>(product);
+                operationResult.StatusId = 200;
+                operationResult.Status = Enum.Status.Success;
+                operationResult.Message = Constant.SuccessMessage;
             }
             return operationResult;
         }

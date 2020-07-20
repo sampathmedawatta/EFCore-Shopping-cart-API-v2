@@ -2,76 +2,60 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using OnlineShopping.Entity.Models.Product;
-using System;
-using System.Collections.Generic;
+using OnlineShopping.Data.Data;
+using System.Threading.Tasks;
 using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
     public class ProductManager : BaseManager, IProductManager
     {
-        private readonly IMapper _mapper;
 
-        public ProductManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting)
+
+        public ProductManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting, mapper)
         {
-            _mapper = mapper;
         }
 
-        /// <summary>
-        /// method get all products 
-        /// /// </summary>
-        /// <param name="id"> if if need to be filtered </param>
-        /// <returns></returns>
-
-        public OperationResult GetAllProducts(Guid? id)
+        public async Task<OperationResult> GetProductsAsunc()
         {
-            // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
+            operationResult.Data = await ProductData.GetProductsAsunc();
 
-            //check if id is available
-            if (id == null)
+            return validateResult(operationResult);
+        }
+
+        public async Task<OperationResult> GetProductsByCategoryNameAsunc(string Name)
+        {
+            OperationResult operationResult = new OperationResult();
+            operationResult.Data = await ProductData.GetProductsByCategoryNameAsunc(Name);
+
+            return validateResult(operationResult);
+        }
+
+        public async Task<OperationResult> GetProductsByOptionsAsunc(string option)
+        {
+            OperationResult operationResult = new OperationResult();
+            operationResult.Data = await ProductData.GetProductsByOptionsAsunc(option);
+
+            return validateResult(operationResult);
+        }
+        private OperationResult validateResult(OperationResult operationResult)
+        {
+            if (operationResult.Data == null)
             {
-                var productList = ProductRepository.GetAll();
-                operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
+                operationResult.StatusId = 400;
+                operationResult.Status = Enum.Status.Error;
+                operationResult.Message = Constant.FailMessage;
+                operationResult.Error = "No Records Found";
             }
             else
             {
-
-                var product = ProductRepository.GetById((Guid)id);
-                operationResult.Data = _mapper.Map<ProductReadDto>(product);
+                operationResult.StatusId = 200;
+                operationResult.Status = Enum.Status.Success;
+                operationResult.Message = Constant.SuccessMessage;
             }
             return operationResult;
         }
 
-        public OperationResult GetProductsByOptions(string option)
-        {
-            // new operation result object to hold response data
-            OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
-
-            var productList = ProductRepository.GetAllByFilter(option);
-            operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
-
-
-            return operationResult;
-        }
-
-        public OperationResult GetProductsByCategoryName(string Name)
-        {
-            // new operation result object to hold response data
-            OperationResult operationResult = new OperationResult();
-            operationResult.Status = Enum.Status.Success;
-            operationResult.Message = Constant.SuccessMessage;
-
-            var productList = ProductRepository.GetAllByCategoryName(Name);
-            operationResult.Data = _mapper.Map<IEnumerable<ProductReadDto>>(productList);
-
-
-            return operationResult;
-        }
     }
 }
