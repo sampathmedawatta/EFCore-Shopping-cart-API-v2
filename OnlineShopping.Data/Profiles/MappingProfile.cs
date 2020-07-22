@@ -1,6 +1,4 @@
-﻿using OnlineShopping.Common.Profiles;
-
-namespace OnlineShopping.Business.Profiles
+﻿namespace OnlineShopping.Data.Profiles
 {
     public class MappingProfile
     {

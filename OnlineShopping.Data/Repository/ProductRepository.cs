@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShopping.Data.Context;
 using OnlineShopping.Data.Entity;
-using System;
+using OnlineShopping.Data.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository
 {
-    public class ProductRepository : IRepository<ProductEntiry>
+    public class ProductRepository : Repository<ProductEntiry>, IProductRepository
     {
-        private readonly OnlineShoppingContext context;
+
         private readonly DbSet<ProductEntiry> table;
-        public ProductRepository(OnlineShoppingContext context)
+        public ProductRepository(OnlineShoppingContext context) : base(context)
         {
-            this.context = context;
+
             table = context.Set<ProductEntiry>();
         }
 
-        public async Task<IEnumerable<ProductEntiry>> GetAllAsunc()
+        public async Task<IEnumerable<ProductEntiry>> GetAllProductsAsunc()
         {
             return await table
                 .Include(c => c.Category)
@@ -63,30 +63,6 @@ namespace OnlineShopping.Data.Repository
                .Where(p => p.IsActive.Equals(true)).ToListAsync();
         }
 
-
-        public async Task<ProductEntiry> GetByIdAsunc(Guid id)
-        {
-            return await table.FindAsync(id);
-        }
-
-        public async Task<int> Insert(ProductEntiry entity)
-        {
-            this.context.Products.Add(entity);
-            int excecutedRows = await this.context.SaveChangesAsync();
-
-            return excecutedRows;
-        }
-
-        public void Update(ProductEntiry entity)
-        {
-            table.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-        }
-        public void Delete(Guid id)
-        {
-            ProductEntiry existing = table.Find(id);
-            table.Remove(existing);
-        }
 
     }
 }

@@ -2,24 +2,25 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
-using OnlineShopping.Data.Data;
+using OnlineShopping.Data.Repository.Interfaces;
 using System.Threading.Tasks;
 using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class ProductManager : BaseManager, IProductManager
+    public class ProductManager : IProductManager
     {
+        private IUnitOfWork _unitOfWork;
 
-
-        public ProductManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting, mapper)
+        public ProductManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<OperationResult> GetProductsAsunc()
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await ProductData.GetProductsAsunc();
+            operationResult.Data = await _unitOfWork.Products.GetAllAsunc();
 
             return validateResult(operationResult);
         }
@@ -27,7 +28,7 @@ namespace OnlineShopping.Business.ManagerClasses
         public async Task<OperationResult> GetProductsByCategoryNameAsunc(string Name)
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await ProductData.GetProductsByCategoryNameAsunc(Name);
+            operationResult.Data = await _unitOfWork.Products.GetAllByCategoryNameAsunc(Name);
 
             return validateResult(operationResult);
         }
@@ -35,7 +36,7 @@ namespace OnlineShopping.Business.ManagerClasses
         public async Task<OperationResult> GetProductsByOptionsAsunc(string option)
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await ProductData.GetProductsByOptionsAsunc(option);
+            operationResult.Data = await _unitOfWork.Products.GetAllByFilterAsunc(option);
 
             return validateResult(operationResult);
         }

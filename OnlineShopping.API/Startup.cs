@@ -9,9 +9,11 @@ using OnlineShopping.API.Exception;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Business.ManagerClasses;
 using OnlineShopping.Business.ManagerClasses.Interfaces;
-using OnlineShopping.Business.Profiles;
 using OnlineShopping.Common;
 using OnlineShopping.Common.Options;
+using OnlineShopping.Data.Profiles;
+using OnlineShopping.Data.Repository;
+using OnlineShopping.Data.Repository.Interfaces;
 
 namespace OnlineShopping.API
 {
@@ -33,6 +35,11 @@ namespace OnlineShopping.API
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
             services.AddAutoMapper(typeof(MappingProfile));
 
