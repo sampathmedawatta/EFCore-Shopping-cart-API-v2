@@ -2,7 +2,7 @@
 using OnlineShopping.Data.Entity;
 using OnlineShopping.Entity.Models.User;
 
-namespace OnlineShopping.Business.Profiles
+namespace OnlineShopping.Data.Profiles
 {
     public class UsersProfile : Profile
     {

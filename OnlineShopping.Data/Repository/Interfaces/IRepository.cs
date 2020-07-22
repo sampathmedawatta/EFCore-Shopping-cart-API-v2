@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OnlineShopping.Data.Repository
+namespace OnlineShopping.Data.Interfaces.Repository
 {
     // TODO : implement common properties and operations (CRUD)
     public interface IRepository<T> where T : class

@@ -2,22 +2,25 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
+using OnlineShopping.Data.Repository.Interfaces;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class CategoryManager : BaseManager, ICategoryManager
+    public class CategoryManager : ICategoryManager
     {
+        private IUnitOfWork _unitOfWork;
 
-        public CategoryManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting, mapper)
+        public CategoryManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<OperationResult> GetCategoriesAsunc()
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await CategoryData.GetCategoriesAsunc();
+            operationResult.Data = await _unitOfWork.Categories.GetAllAsunc();
 
             return validateResult(operationResult);
 

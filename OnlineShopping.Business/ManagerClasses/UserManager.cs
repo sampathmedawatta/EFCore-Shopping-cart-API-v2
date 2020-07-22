@@ -2,20 +2,24 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
+using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.User;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
-    public class UserManager : BaseManager, IUserManager
+    public class UserManager : IUserManager
     {
-        public UserManager(IOptions<AppSettings> appSetting, IMapper mapper) : base(appSetting, mapper)
+        private IUnitOfWork _unitOfWork;
+        public UserManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
         }
         public async Task<OperationResult> CreateUserAsunc(UserCreateDto userCreateDto)
         {
+            // TODO fix create user
             OperationResult operationResult = new OperationResult();
-            bool result = await UserData.CreateUserAsunc(userCreateDto);
+            bool result = false; //await _unitOfWork.Users.Insert(userCreateDto);
 
             return validateResult(operationResult, result);
         }
