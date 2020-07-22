@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using OnlineShopping.Data.Context;
 using OnlineShopping.Data.Entity;
 using OnlineShopping.Data.Repository.Interfaces;
@@ -9,10 +10,13 @@ namespace OnlineShopping.Data.Repository
     {
 
         private readonly DbSet<CustomerPasswordEntry> table;
-        public UserPasswordRepository(OnlineShoppingContext context) : base(context)
+        private readonly IMapper _mapper;
+
+        public UserPasswordRepository(OnlineShoppingContext context, IMapper mapper) : base(context)
         {
-            this.context = context;
+
             table = context.Set<CustomerPasswordEntry>();
+            _mapper = mapper;
         }
 
     }

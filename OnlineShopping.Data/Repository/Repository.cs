@@ -16,6 +16,7 @@ namespace OnlineShopping.Data.Repository
         {
             this.context = context;
             table = context.Set<T>();
+
         }
 
         public async Task<T> GetByIdAsunc(Guid id)

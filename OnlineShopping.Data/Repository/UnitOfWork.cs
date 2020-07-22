@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Context;
 using OnlineShopping.Data.Repository.Interfaces;
@@ -23,17 +24,17 @@ namespace OnlineShopping.Data.Repository
                 return new OnlineShoppingContext(ConnectionString);
             }
         }
-        public UnitOfWork(IOptions<AppSettings> appSetting)
+        public UnitOfWork(IOptions<AppSettings> appSetting, IMapper mapper)
         {
             //AppSettings configSettings = appSetting.Value;
             //ConnectionString = configSettings.ConnectionString;
 
             ConnectionString = appSetting.Value.ConnectionString;
 
-            Products = new ProductRepository(Context);
-            Categories = new CategoryRepository(Context);
-            Users = new UserRepository(Context);
-            UserPasswords = new UserPasswordRepository(Context);
+            Products = new ProductRepository(Context, mapper);
+            Categories = new CategoryRepository(Context, mapper);
+            Users = new UserRepository(Context, mapper);
+            UserPasswords = new UserPasswordRepository(Context, mapper);
 
         }
 
