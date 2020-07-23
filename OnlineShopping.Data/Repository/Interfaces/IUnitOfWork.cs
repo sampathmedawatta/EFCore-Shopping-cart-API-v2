@@ -9,7 +9,7 @@ namespace OnlineShopping.Data.Repository.Interfaces
     {
         IProductRepository<ProductDto> Products { get; }
         ICategoryRepository<CategoryDto> Categories { get; }
-        IUserRepository<UserDto> Users { get; }
+        IUserRepository<CustomerDto> Users { get; }
         int Complete();
     }
 }

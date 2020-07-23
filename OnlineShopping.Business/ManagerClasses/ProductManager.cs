@@ -4,7 +4,6 @@ using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Repository.Interfaces;
 using System.Threading.Tasks;
-using Enum = OnlineShopping.Common.Enum;
 
 namespace OnlineShopping.Business.ManagerClasses
 {
@@ -45,14 +44,14 @@ namespace OnlineShopping.Business.ManagerClasses
             if (operationResult.Data == null)
             {
                 operationResult.StatusId = 400;
-                operationResult.Status = Enum.Status.Error;
+                operationResult.Status = Enums.Status.Error;
                 operationResult.Message = Constant.FailMessage;
                 operationResult.Error = "No Records Found";
             }
             else
             {
                 operationResult.StatusId = 200;
-                operationResult.Status = Enum.Status.Success;
+                operationResult.Status = Enums.Status.Success;
                 operationResult.Message = Constant.SuccessMessage;
             }
             return operationResult;

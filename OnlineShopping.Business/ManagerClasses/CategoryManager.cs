@@ -31,14 +31,14 @@ namespace OnlineShopping.Business.ManagerClasses
             if (operationResult.Data == null)
             {
                 operationResult.StatusId = 400;
-                operationResult.Status = Enum.Status.Error;
+                operationResult.Status = Enums.Status.Error;
                 operationResult.Message = Constant.FailMessage;
                 operationResult.Error = "No Records Found";
             }
             else
             {
                 operationResult.StatusId = 200;
-                operationResult.Status = Enum.Status.Success;
+                operationResult.Status = Enums.Status.Success;
                 operationResult.Message = Constant.SuccessMessage;
             }
             return operationResult;

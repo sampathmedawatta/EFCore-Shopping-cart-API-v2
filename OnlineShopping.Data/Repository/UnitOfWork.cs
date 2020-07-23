@@ -14,7 +14,7 @@ namespace OnlineShopping.Data.Repository
         private readonly string ConnectionString;
         public IProductRepository<ProductDto> Products { get; private set; }
         public ICategoryRepository<CategoryDto> Categories { get; private set; }
-        public IUserRepository<UserDto> Users { get; private set; }
+        public IUserRepository<CustomerDto> Users { get; private set; }
 
         private OnlineShoppingContext Context
         {
