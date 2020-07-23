@@ -21,9 +21,8 @@ namespace OnlineShopping.Business.ManagerClasses
             OperationResult operationResult = new OperationResult();
 
             customerDto.IsActive = true;
-            customerDto.CustomerRoleId = Guid.Parse("F9B8A3F4-736E-484E-B2F7-08763339F95C");
-            customerDto.PasswordFormatId = 1; // TODO remove this field
-            customerDto.PasswordSalt = "1";// TODO remove this field
+            customerDto.CustomerRoleId = Guid.Parse("F9B8A3F4-736E-484E-B2F7-08763339F95C");  // TODO get role id from DB
+
             customerDto.User = customerDto;
 
             bool result = await (_unitOfWork.Users.Insert(customerDto)) > 0;
