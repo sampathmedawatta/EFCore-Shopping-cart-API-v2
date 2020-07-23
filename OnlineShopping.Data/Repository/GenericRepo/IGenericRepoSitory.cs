@@ -4,7 +4,8 @@ using System.Linq.Expressions;
 
 namespace OnlineShopping.Data.Repository.GenericRepo
 {
-
+    ///
+    /// Sample link for Generic automapping with generic repository
     ///https://gist.github.com/mcnkbr/f96532254f62a384878f
     public interface IGenericRepoSitory<TModel, TDto>
         where TModel : class
