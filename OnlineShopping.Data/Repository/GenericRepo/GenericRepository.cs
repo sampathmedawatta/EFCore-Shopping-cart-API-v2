@@ -164,5 +164,131 @@ namespace OnlineShopping.Data.Repository.GenericRepo
         {
             this.context.SaveChanges();
         }
+
+        /// <summary>
+        /// IQueryable List with Generic AutoMapper
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="includeProperties"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IQueryable<TModel> List(Expression<Func<TModel, bool>> filter = null, Func<IQueryable<TModel>,
+            IOrderedQueryable<TModel>> orderBy = null, List<Expression<Func<TModel, object>>> includeProperties = null,
+        int? page = null, int? pageSize = null)
+        {
+            IQueryable<TModel> query = this.context.Set<TModel>();
+
+            if (includeProperties != null)
+                includeProperties.ForEach(i => { query = query.Include(i); });
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            if (page != null && pageSize != null)
+                query = query
+                    .Skip(page.Value)
+                    .Take(pageSize.Value);
+
+            return query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="ascendingDescending"></param>
+        /// <param name="includeProperties"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IQueryable<TModel> List(Expression<Func<TModel, bool>> filter = null, string orderBy = null, string ascendingDescending = "ASC",
+            List<Expression<Func<TModel, object>>> includeProperties = null,
+       int? page = null, int? pageSize = null)
+        {
+            IQueryable<TModel> query = this.context.Set<TModel>();
+
+            if (includeProperties != null)
+                includeProperties.ForEach(i => { query = query.Include(i); });
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (page != null && pageSize != null)
+                query = query.OrderBy(orderBy ?? "Id", ascendingDescending == "ASC")
+                    .Skip(page.Value)
+                    .Take(pageSize.Value);
+
+            return query;
+        }
+
+
+        public Tuple<IQueryable<TModel>, int> ListWithPaging(Expression<Func<TModel, bool>> filter = null, Func<IQueryable<TModel>,
+            IOrderedQueryable<TModel>> orderBy = null, List<Expression<Func<TModel, object>>> includeProperties = null,
+        int? page = null, int? pageSize = null)
+        {
+            IQueryable<TModel> query = this.context.Set<TModel>();
+
+            if (includeProperties != null)
+                includeProperties.ForEach(i => { query = query.Include(i); });
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            var count = query.Count();
+            if (page != null && pageSize != null)
+                query = query
+                    .Skip(page.Value)
+                    .Take(pageSize.Value);
+
+            return new Tuple<IQueryable<TModel>, int>(query, count);
+        }
+
+        public Tuple<IQueryable<TModel>, int> ListWithPaging(Expression<Func<TModel, bool>> filter = null, string orderBy = null, string ascendingDescending = "ASC",
+           List<Expression<Func<TModel, object>>> includeProperties = null,
+      int? page = null, int? pageSize = null)
+        {
+            IQueryable<TModel> query = this.context.Set<TModel>();
+
+            if (includeProperties != null)
+                includeProperties.ForEach(i => { query = query.Include(i); });
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            var count = query.Count();
+
+            if (page != null && pageSize != null)
+                query = query
+                    .OrderBy(orderBy ?? "Id", ascendingDescending == "ASC")
+                    .Skip(page.Value)
+                    .Take(pageSize.Value);
+
+            return new Tuple<IQueryable<TModel>, int>(query, count);
+        }
+
+        public IQueryable<TDto> ToDtoListPaging(List<TDto> list, string orderBy = null, string ascendingDescending = "ASC", int? page = null, int? pageSize = null)
+        {
+            IQueryable<TDto> query = list.AsQueryable();
+
+            if (page != null && pageSize != null)
+                query = query
+                    .OrderBy(orderBy ?? "Id", ascendingDescending == "ASC")
+                    .Skip(page.Value)
+                    .Take(pageSize.Value);
+
+            return query;
+        }
     }
 }
