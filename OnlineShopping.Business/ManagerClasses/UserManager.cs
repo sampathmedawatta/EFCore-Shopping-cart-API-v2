@@ -15,11 +15,11 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<OperationResult> CreateUserAsunc(UserCreateDto userCreateDto)
+        public async Task<OperationResult> CreateUserAsunc(UserDto userDto)
         {
             // TODO fix create user
             OperationResult operationResult = new OperationResult();
-            bool result = false; //await _unitOfWork.Users.Insert(userCreateDto);
+            bool result = false; //await _unitOfWork.Users.Insert(UserDto);
 
             return validateResult(operationResult, result);
         }

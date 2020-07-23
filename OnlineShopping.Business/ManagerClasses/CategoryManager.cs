@@ -20,7 +20,7 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.Categories.GetAllAsunc();
+            operationResult.Data = await _unitOfWork.Categories.GetAllAsync();
 
             return validateResult(operationResult);
 

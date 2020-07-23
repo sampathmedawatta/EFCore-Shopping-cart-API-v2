@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace OnlineShopping.Entity.Models.Category
 {
-    public class CategoryReadDto
+    public class CategoryDto
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }

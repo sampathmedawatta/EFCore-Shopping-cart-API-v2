@@ -20,7 +20,7 @@ namespace OnlineShopping.Business.ManagerClasses
         public async Task<OperationResult> GetProductsAsunc()
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.Products.GetAllAsunc();
+            operationResult.Data = await _unitOfWork.Products.GetAllAsync();
 
             return validateResult(operationResult);
         }

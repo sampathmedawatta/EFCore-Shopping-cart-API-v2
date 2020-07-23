@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Interfaces.Repository
 {
-    // TODO : implement common properties and operations (CRUD)
+
     public interface IRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsunc();
+        Task<IEnumerable<T>> GetAllAsync();
 
-        Task<T> GetByIdAsunc(Guid id);
+        Task<T> GetByIdAsync(Guid id);
         Task<int> Insert(T entity);
         void Update(T entity);
         void Delete(Guid id);

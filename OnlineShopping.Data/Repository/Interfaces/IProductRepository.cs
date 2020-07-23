@@ -1,15 +1,13 @@
-﻿using OnlineShopping.Data.Entity;
-using OnlineShopping.Data.Interfaces.Repository;
+﻿using OnlineShopping.Data.Interfaces.Repository;
 using OnlineShopping.Entity.Models.Product;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository.Interfaces
 {
-    public interface IProductRepository : IRepository<ProductEntiry>
+    public interface IProductRepository<T> : IRepository<T> where T : class
     {
-        Task<IEnumerable<ProductReadDto>> GetAllProductsAsunc();
-        Task<IEnumerable<ProductReadDto>> GetAllByFilterAsunc(string FilterBy);
-        Task<IEnumerable<ProductReadDto>> GetAllByCategoryNameAsunc(string CategoryName);
+        Task<IEnumerable<ProductDto>> GetAllByFilterAsunc(string FilterBy);
+        Task<IEnumerable<ProductDto>> GetAllByCategoryNameAsunc(string CategoryName);
     }
 }

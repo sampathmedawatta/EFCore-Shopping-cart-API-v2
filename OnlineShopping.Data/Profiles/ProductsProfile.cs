@@ -8,7 +8,7 @@ namespace OnlineShopping.Data.Profiles
     {
         public ProductsProfile()
         {
-            CreateMap<ProductEntiry, ProductReadDto>()
+            CreateMap<ProductEntiry, ProductDto>()
                 .ForMember(dest =>
                 dest.Price,
                 opt => opt.MapFrom(src => src.SellingPrice))
