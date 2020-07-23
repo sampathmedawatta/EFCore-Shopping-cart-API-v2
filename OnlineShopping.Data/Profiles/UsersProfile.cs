@@ -8,11 +8,13 @@ namespace OnlineShopping.Data.Profiles
     {
         public UsersProfile()
         {
-            // login CreateMap<CustomerEntry, UserReadDto>();
-            CreateMap<UserCreateDto, CustomerEntry>();
-            CreateMap<UserRegisterDto, CustomerPasswordEntry>();
-
-
+            CreateMap<CustomerEntry, CustomerDto>();
+            CreateMap<CustomerDto, CustomerEntry>();
+            CreateMap<UserDto, CustomerPasswordEntry>()
+                 .ForMember(dest =>
+                dest.Customer,
+                opt => opt.MapFrom(src => src.User))
+                ;
         }
     }
 }

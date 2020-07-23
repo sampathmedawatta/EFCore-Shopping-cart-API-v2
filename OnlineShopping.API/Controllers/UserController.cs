@@ -25,10 +25,10 @@ namespace OnlineShopping.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult<OperationResult>> RegisterUser([FromBody] UserCreateDto userCreateDto)
+        public async Task<ActionResult<OperationResult>> RegisterUser([FromBody] CustomerDto customerDto)
         {
             _logger.LogInformation("Create new user");
-            var operationResult = await _userManager.CreateUserAsunc(userCreateDto);
+            var operationResult = await _userManager.CreateUserAsunc(customerDto);
 
 
 

@@ -20,7 +20,7 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.Categories.GetAllAsunc();
+            operationResult.Data = await _unitOfWork.Categories.GetAllAsync();
 
             return validateResult(operationResult);
 
@@ -31,14 +31,14 @@ namespace OnlineShopping.Business.ManagerClasses
             if (operationResult.Data == null)
             {
                 operationResult.StatusId = 400;
-                operationResult.Status = Enum.Status.Error;
+                operationResult.Status = Enums.Status.Error;
                 operationResult.Message = Constant.FailMessage;
                 operationResult.Error = "No Records Found";
             }
             else
             {
                 operationResult.StatusId = 200;
-                operationResult.Status = Enum.Status.Success;
+                operationResult.Status = Enums.Status.Success;
                 operationResult.Message = Constant.SuccessMessage;
             }
             return operationResult;

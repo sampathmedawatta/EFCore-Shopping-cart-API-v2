@@ -4,6 +4,7 @@ using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.User;
+using System;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Business.ManagerClasses
@@ -15,11 +16,17 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<OperationResult> CreateUserAsunc(UserCreateDto userCreateDto)
+        public async Task<OperationResult> CreateUserAsunc(CustomerDto customerDto)
         {
-            // TODO fix create user
             OperationResult operationResult = new OperationResult();
-            bool result = false; //await _unitOfWork.Users.Insert(userCreateDto);
+
+            customerDto.IsActive = true;
+            customerDto.CustomerRoleId = Guid.Parse("F9B8A3F4-736E-484E-B2F7-08763339F95C");
+            customerDto.PasswordFormatId = 1; // TODO remove this field
+            customerDto.PasswordSalt = "1";// TODO remove this field
+            customerDto.User = customerDto;
+
+            bool result = await (_unitOfWork.Users.Insert(customerDto)) > 0;
 
             return validateResult(operationResult, result);
         }
@@ -29,13 +36,13 @@ namespace OnlineShopping.Business.ManagerClasses
             if (result)
             {
                 operationResult.StatusId = 200;
-                operationResult.Status = Enum.Status.Success;
+                operationResult.Status = Enums.Status.Success;
                 operationResult.Message = Constant.SuccessMessage;
             }
             else
             {
                 operationResult.StatusId = 400;
-                operationResult.Status = Enum.Status.Error;
+                operationResult.Status = Enums.Status.Error;
                 operationResult.Message = Constant.FailMessage;
                 operationResult.Error = "Records Not Saved";
             }

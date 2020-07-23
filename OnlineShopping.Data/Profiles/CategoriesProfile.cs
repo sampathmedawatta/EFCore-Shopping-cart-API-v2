@@ -8,7 +8,7 @@ namespace OnlineShopping.Data.Profiles
     {
         public CategoriesProfile()
         {
-            CreateMap<CategoryEntity, CategoryReadDto>();
+            CreateMap<CategoryEntity, CategoryDto>();
 
         }
     }

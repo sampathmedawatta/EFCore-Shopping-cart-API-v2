@@ -4,7 +4,7 @@
     /// <summary>
     /// Enum
     /// </summary>
-    public static class Enum
+    public static class Enums
     {
         /// <summary>
         /// Application Status
@@ -25,6 +25,11 @@
             Success = 200,
             NoRecords = 400
 
+        }
+
+        public enum Gender
+        {
+            M, F
         }
     }
 }

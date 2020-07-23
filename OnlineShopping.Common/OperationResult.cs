@@ -1,4 +1,4 @@
-﻿using static OnlineShopping.Common.Enum;
+﻿using static OnlineShopping.Common.Enums;
 
 namespace OnlineShopping.Common
 {

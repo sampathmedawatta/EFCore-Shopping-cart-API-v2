@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static OnlineShopping.Common.Enums;
 
 namespace OnlineShopping.Data.Entity
 {
@@ -36,8 +37,5 @@ namespace OnlineShopping.Data.Entity
         [Required]
         public bool IsActive { get; set; }
     }
-    public enum Gender
-    {
-        M, F
-    }
+
 }

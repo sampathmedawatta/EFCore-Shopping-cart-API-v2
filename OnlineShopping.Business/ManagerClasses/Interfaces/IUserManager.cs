@@ -6,6 +6,6 @@ namespace OnlineShopping.Business.ManagerClasses.Interfaces
 {
     public interface IUserManager
     {
-        Task<OperationResult> CreateUserAsunc(UserCreateDto userCreateDto);
+        Task<OperationResult> CreateUserAsunc(CustomerDto customerDto);
     }
 }
