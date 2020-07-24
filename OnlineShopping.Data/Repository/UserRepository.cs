@@ -6,6 +6,7 @@ using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository
@@ -21,6 +22,30 @@ namespace OnlineShopping.Data.Repository
             this.context = context;
             table = context.Set<CustomerEntry>();
             _mapper = mapper;
+        }
+        public async Task<CustomerDto> GetByIdAsync(Guid id)
+        {
+            var customer = await table.FindAsync(id);
+
+            return _mapper.Map<CustomerEntry, CustomerDto>(customer);
+        }
+
+        public async Task<CustomerDto> GetByEmailAsync(string Email)
+        {
+            var customer = await table.Where(c => c.Email == Email).FirstOrDefaultAsync();
+
+            return _mapper.Map<CustomerEntry, CustomerDto>(customer);
+        }
+
+        public async Task<bool> CheckPasswordAsync(Guid id, string password)
+        {
+            var customerPassword = await this.context.CustomerPasswords.Where(c => c.CustomerId == id).FirstOrDefaultAsync();
+            if (customerPassword != null && customerPassword.Password == password)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<int> Insert(CustomerDto entity)
@@ -47,10 +72,7 @@ namespace OnlineShopping.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<CustomerDto> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+
 
 
 
