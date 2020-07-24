@@ -16,6 +16,16 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             _unitOfWork = unitOfWork;
         }
+
+
+        public OperationResult GetAllUsersAsunc()
+        {
+            OperationResult operationResult = new OperationResult();
+            operationResult.Data = _unitOfWork.UserGenericRepository.GetAll();
+
+            return validateResult(operationResult, true);
+        }
+
         public async Task<OperationResult> CreateUserAsunc(CustomerDto customerDto)
         {
             OperationResult operationResult = new OperationResult();

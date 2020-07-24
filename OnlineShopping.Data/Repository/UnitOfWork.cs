@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Options;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Context;
+using OnlineShopping.Data.Entity;
+using OnlineShopping.Data.Repository.GenericRepo;
 using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.Category;
 using OnlineShopping.Entity.Models.Product;
@@ -16,6 +18,7 @@ namespace OnlineShopping.Data.Repository
         public ICategoryRepository<CategoryDto> Categories { get; private set; }
         public IUserRepository<CustomerDto> Users { get; private set; }
 
+        public IGenericRepoSitory<CustomerEntry, UserGenericDto> UserGenericRepository { get; private set; }
         private OnlineShoppingContext Context
         {
             get
@@ -31,6 +34,8 @@ namespace OnlineShopping.Data.Repository
             Products = new ProductRepository(Context, mapper);
             Categories = new CategoryRepository(Context, mapper);
             Users = new UserRepository(Context, mapper);
+
+            UserGenericRepository = new CustomerRepository(Context, mapper);
 
         }
 

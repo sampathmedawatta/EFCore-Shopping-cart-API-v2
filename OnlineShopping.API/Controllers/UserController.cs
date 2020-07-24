@@ -22,6 +22,29 @@ namespace OnlineShopping.API.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method to get Useres
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        // GET: api/User/
+
+        [HttpGet]
+        public ActionResult<OperationResult> GetAsunc()
+        {
+
+            _logger.LogInformation("Get Category List");
+            var operationResult = _userManager.GetAllUsersAsunc();
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
+
+        }
+
+
+
         [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
