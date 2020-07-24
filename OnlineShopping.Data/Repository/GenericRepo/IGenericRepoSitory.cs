@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository.GenericRepo
 {
     ///
     /// Sample link for Generic automapping with generic repository
     ///https://gist.github.com/mcnkbr/f96532254f62a384878f
-    public interface IGenericRepoSitory<TModel, TDto>
+    public interface IGenericRepository<TModel, TDto>
         where TModel : class
         where TDto : class
     {
-        List<TDto> GetAll(bool mapReset = true);
-        List<TDto> FindBy(Expression<Func<TModel, bool>> predicate, bool mapReset = true);
+        Task<List<TDto>> GetAll(bool mapReset = true);
+        Task<List<TDto>> FindBy(Expression<Func<TModel, bool>> predicate, bool mapReset = true);
 
         void Add(TDto entity);
         void Add(TModel entity);

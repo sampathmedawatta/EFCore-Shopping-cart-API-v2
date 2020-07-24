@@ -30,11 +30,11 @@ namespace OnlineShopping.API.Controllers
         // GET: api/User/
 
         [HttpGet]
-        public ActionResult<OperationResult> GetAsunc()
+        public async Task<ActionResult<OperationResult>> GetAsunc()
         {
 
             _logger.LogInformation("Get Category List");
-            var operationResult = _userManager.GetAllUsersAsunc();
+            var operationResult = await _userManager.GetAllUsersAsync();
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);
@@ -51,7 +51,7 @@ namespace OnlineShopping.API.Controllers
         public async Task<ActionResult<OperationResult>> RegisterUser([FromBody] CustomerDto customerDto)
         {
             _logger.LogInformation("Create new user");
-            var operationResult = await _userManager.CreateUserAsunc(customerDto);
+            var operationResult = await _userManager.CreateUserAsync(customerDto);
 
 
 

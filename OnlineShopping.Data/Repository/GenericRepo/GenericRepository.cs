@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OnlineShopping.Data.Repository.GenericRepo
 {
-    public abstract class GenericRepository<TModel, TDto> : IGenericRepoSitory<TModel, TDto>
+    public abstract class GenericRepository<TModel, TDto> : IGenericRepository<TModel, TDto>
         where TModel : class
         where TDto : class
 
@@ -24,10 +25,10 @@ namespace OnlineShopping.Data.Repository.GenericRepo
             _mapper = mapper;
         }
 
-        public List<TDto> GetAll(bool mapReset = true)
+        public async Task<List<TDto>> GetAll(bool mapReset = true)
         {
             var ent = this.context.Set<TModel>();
-            var query = ent.ToList();
+            var query = await ent.ToListAsync();
 
             //TODO fix this issue - reset() is not found
 
@@ -37,10 +38,10 @@ namespace OnlineShopping.Data.Repository.GenericRepo
             return list;
         }
 
-        public List<TDto> FindBy(Expression<Func<TModel, bool>> predicate, bool mapReset = true)
+        public async Task<List<TDto>> FindBy(Expression<Func<TModel, bool>> predicate, bool mapReset = true)
         {
             var ent = this.context.Set<TModel>();
-            var query = ent.Where(predicate).ToList();
+            var query = await ent.Where(predicate).ToListAsync();
 
             // if (mapReset)
             //     Mapper.Reset();

@@ -18,7 +18,7 @@ namespace OnlineShopping.Data.Repository
         public ICategoryRepository<CategoryDto> Categories { get; private set; }
         public IUserRepository<CustomerDto> Users { get; private set; }
 
-        public IGenericRepoSitory<CustomerEntry, UserGenericDto> UserGenericRepository { get; private set; }
+        public IGenericRepository<CustomerEntry, UserGenericDto> UserGenericRepository { get; private set; }
         private OnlineShoppingContext Context
         {
             get
