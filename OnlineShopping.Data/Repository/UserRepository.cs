@@ -23,7 +23,12 @@ namespace OnlineShopping.Data.Repository
             table = context.Set<CustomerEntry>();
             _mapper = mapper;
         }
+        public async Task<CustomerDto> GetByIdAsync(Guid id)
+        {
+            var customer = await table.FindAsync(id);
 
+            return _mapper.Map<CustomerEntry, CustomerDto>(customer);
+        }
 
         public async Task<CustomerDto> GetByEmailAsync(string Email)
         {
@@ -67,10 +72,7 @@ namespace OnlineShopping.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<CustomerDto> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+
 
 
 

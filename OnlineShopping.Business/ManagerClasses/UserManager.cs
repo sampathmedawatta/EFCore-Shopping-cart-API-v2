@@ -17,6 +17,20 @@ namespace OnlineShopping.Business.ManagerClasses
             _unitOfWork = unitOfWork;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<OperationResult> GetById(Guid id)
+        {
+            OperationResult operationResult = new OperationResult();
+            operationResult.Data = await _unitOfWork.Users.GetByIdAsync(id);
+
+            return validateResult(operationResult, true);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -27,6 +41,7 @@ namespace OnlineShopping.Business.ManagerClasses
         {
             return await _unitOfWork.Users.CheckPasswordAsync(id, password);
         }
+
 
         /// <summary>
         /// 
@@ -39,18 +54,6 @@ namespace OnlineShopping.Business.ManagerClasses
         }
 
 
-        /// <summary>
-        /// get all users
-        /// </summary>
-        /// <returns></returns>
-        public async Task<OperationResult> GetAllUsersAsync()
-        {
-            // get all users from generic repository
-            OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.UserGenericRepository.GetAll();
-
-            return validateResult(operationResult, true);
-        }
 
         public async Task<OperationResult> CreateUserAsync(CustomerDto customerDto)
         {
@@ -64,6 +67,19 @@ namespace OnlineShopping.Business.ManagerClasses
             bool result = await (_unitOfWork.Users.Insert(customerDto)) > 0;
 
             return validateResult(operationResult, result);
+        }
+
+        /// <summary>
+        /// get all users
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OperationResult> GetAllUsersAsync()
+        {
+            // get all users from generic repository
+            OperationResult operationResult = new OperationResult();
+            operationResult.Data = await _unitOfWork.UserGenericRepository.GetAll();
+
+            return validateResult(operationResult, true);
         }
 
         private OperationResult validateResult(OperationResult operationResult, bool result)
@@ -85,5 +101,7 @@ namespace OnlineShopping.Business.ManagerClasses
 
             return operationResult;
         }
+
+
     }
 }

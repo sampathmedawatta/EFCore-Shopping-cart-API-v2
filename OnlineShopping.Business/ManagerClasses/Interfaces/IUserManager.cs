@@ -9,9 +9,10 @@ namespace OnlineShopping.Business.ManagerClasses.Interfaces
     {
         Task<OperationResult> CreateUserAsync(CustomerDto customerDto);
         Task<OperationResult> GetAllUsersAsync();
+
+        Task<OperationResult> GetById(Guid id);
         Task<CustomerDto> GetByEmailAsync(string email);
         Task<bool> CheckPasswordAsync(Guid id, string password);
-
 
     }
 }

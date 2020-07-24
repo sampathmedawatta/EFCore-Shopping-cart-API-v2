@@ -10,6 +10,7 @@ using OnlineShopping.Entity.Models;
 using OnlineShopping.Entity.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,23 @@ namespace OnlineShopping.API.Controllers
             _appsettings = appsettings.Value;
             _userManager = userManager;
             _logger = logger;
+        }
+
+        [HttpGet]
+        [Route("Profile")]
+        //GET : /api/User/Profile
+        public async Task<ActionResult<OperationResult>> GetUserProfile()
+        {
+            Guid UserId = Guid.Parse(User.Claims.First(
+                c => c.Type == "UserId").Value);
+
+            var operationResult = await _userManager.GetById(UserId);
+
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
         }
 
         /// <summary>
