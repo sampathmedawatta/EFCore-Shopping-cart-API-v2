@@ -13,7 +13,7 @@ namespace OnlineShopping.Data.Repository.Interfaces
         ICategoryRepository<CategoryDto> Categories { get; }
         IUserRepository<CustomerDto> Users { get; }
 
-        IGenericRepoSitory<CustomerEntry, UserGenericDto> UserGenericRepository { get; }
+        IGenericRepository<CustomerEntry, UserGenericDto> UserGenericRepository { get; }
         int Complete();
     }
 }

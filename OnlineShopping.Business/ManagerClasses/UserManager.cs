@@ -17,16 +17,20 @@ namespace OnlineShopping.Business.ManagerClasses
             _unitOfWork = unitOfWork;
         }
 
-
-        public OperationResult GetAllUsersAsunc()
+        /// <summary>
+        /// get all users
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OperationResult> GetAllUsersAsync()
         {
+            // get all users from generic repository
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = _unitOfWork.UserGenericRepository.GetAll();
+            operationResult.Data = await _unitOfWork.UserGenericRepository.GetAll();
 
             return validateResult(operationResult, true);
         }
 
-        public async Task<OperationResult> CreateUserAsunc(CustomerDto customerDto)
+        public async Task<OperationResult> CreateUserAsync(CustomerDto customerDto)
         {
             OperationResult operationResult = new OperationResult();
 
