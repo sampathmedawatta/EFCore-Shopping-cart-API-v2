@@ -17,7 +17,7 @@ namespace OnlineShopping.API.Controllers
         private readonly ILogger _logger;
         #endregion
 
-        public CategoryController(ICategoryManager categoryManager, ILogger<ProductController> logger)
+        public CategoryController(ICategoryManager categoryManager, ILogger<CategoryController> logger)
         {
             _categoryManager = categoryManager;
             _logger = logger;
