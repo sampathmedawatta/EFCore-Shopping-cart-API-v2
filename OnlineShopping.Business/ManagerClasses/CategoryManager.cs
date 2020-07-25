@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Options;
-using OnlineShopping.Business.Interfaces.ManagerClasses;
+﻿using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Repository.Interfaces;
 using System.Threading.Tasks;
@@ -11,7 +9,7 @@ namespace OnlineShopping.Business.ManagerClasses
     {
         private IUnitOfWork _unitOfWork;
 
-        public CategoryManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
+        public CategoryManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

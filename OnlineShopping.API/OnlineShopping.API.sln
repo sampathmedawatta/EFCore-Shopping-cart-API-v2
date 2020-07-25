@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShopping.Business", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShopping.Common", "..\OnlineShopping.Common\OnlineShopping.Common.csproj", "{293900A9-307B-4AF1-8B35-F16AEA4DA050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShopping.Entity", "..\OnlineShopping.Entity\OnlineShopping.Entity.csproj", "{DBB2BDF2-9A45-48F1-BA4F-45FB52ECC5AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShopping.Entity", "..\OnlineShopping.Entity\OnlineShopping.Entity.csproj", "{DBB2BDF2-9A45-48F1-BA4F-45FB52ECC5AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShopping.UnitTest", "..\OnlineShopping.UnitTest\OnlineShopping.UnitTest.csproj", "{66A6A52C-6161-4D80-90E4-303FBB6FBF5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DBB2BDF2-9A45-48F1-BA4F-45FB52ECC5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB2BDF2-9A45-48F1-BA4F-45FB52ECC5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBB2BDF2-9A45-48F1-BA4F-45FB52ECC5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A6A52C-6161-4D80-90E4-303FBB6FBF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A6A52C-6161-4D80-90E4-303FBB6FBF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A6A52C-6161-4D80-90E4-303FBB6FBF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A6A52C-6161-4D80-90E4-303FBB6FBF5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
