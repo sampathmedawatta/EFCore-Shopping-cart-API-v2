@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Options;
-using OnlineShopping.Business.Interfaces.ManagerClasses;
+﻿using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Repository.Interfaces;
 using System.Threading.Tasks;
@@ -11,12 +9,12 @@ namespace OnlineShopping.Business.ManagerClasses
     {
         private IUnitOfWork _unitOfWork;
 
-        public ProductManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
+        public ProductManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<OperationResult> GetProductsAsunc()
+        public async Task<OperationResult> GetProductsAsync()
         {
             OperationResult operationResult = new OperationResult();
             operationResult.Data = await _unitOfWork.Products.GetAllAsync();
@@ -24,18 +22,18 @@ namespace OnlineShopping.Business.ManagerClasses
             return validateResult(operationResult);
         }
 
-        public async Task<OperationResult> GetProductsByCategoryNameAsunc(string Name)
+        public async Task<OperationResult> GetProductsByCategoryNameAsync(string Name)
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.Products.GetAllByCategoryNameAsunc(Name);
+            operationResult.Data = await _unitOfWork.Products.GetAllByCategoryNameAsync(Name);
 
             return validateResult(operationResult);
         }
 
-        public async Task<OperationResult> GetProductsByOptionsAsunc(string option)
+        public async Task<OperationResult> GetProductsByOptionsAsync(string option)
         {
             OperationResult operationResult = new OperationResult();
-            operationResult.Data = await _unitOfWork.Products.GetAllByFilterAsunc(option);
+            operationResult.Data = await _unitOfWork.Products.GetAllByFilterAsync(option);
 
             return validateResult(operationResult);
         }

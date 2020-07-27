@@ -14,7 +14,7 @@ namespace OnlineShopping.Business.ManagerClasses
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<OperationResult> GetCategoriesAsunc()
+        public async Task<OperationResult> GetCategoriesAsync()
         {
             // new operation result object to hold response data
             OperationResult operationResult = new OperationResult();

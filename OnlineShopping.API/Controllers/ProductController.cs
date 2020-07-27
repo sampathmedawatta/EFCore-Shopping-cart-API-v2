@@ -32,10 +32,10 @@ namespace OnlineShopping.API.Controllers
         /// <returns></returns>
         // GET: api/Product
         [HttpGet()]
-        public async Task<ActionResult<OperationResult>> GetAsunc()
+        public async Task<ActionResult<OperationResult>> GetAsync()
         {
             _logger.LogInformation("Get Product List");
-            var operationResult = await _productManager.GetProductsAsunc();
+            var operationResult = await _productManager.GetProductsAsync();
 
             if (operationResult.Data == null)
             {
@@ -54,9 +54,9 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetFeatureProducts/
 
         [HttpGet("FeatureProducts")]
-        public async Task<ActionResult<OperationResult>> GetFeatureProductsAsunc()
+        public async Task<ActionResult<OperationResult>> GetFeatureProductsAsync()
         {
-            var operationResult = await _productManager.GetProductsByOptionsAsunc("FeatureProducts");
+            var operationResult = await _productManager.GetProductsByOptionsAsync("FeatureProducts");
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);
@@ -73,9 +73,9 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("HomePageProducts")]
-        public async Task<ActionResult<OperationResult>> GetHomePageProductsAsunc()
+        public async Task<ActionResult<OperationResult>> GetHomePageProductsAsync()
         {
-            var operationResult = await _productManager.GetProductsByOptionsAsunc("HomePageProducts");
+            var operationResult = await _productManager.GetProductsByOptionsAsync("HomePageProducts");
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);
@@ -91,9 +91,9 @@ namespace OnlineShopping.API.Controllers
         // GET: api/Product/GetHomePageProducts/
 
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
-        public async Task<ActionResult<OperationResult>> GetAllByCategoryNameAsunc(string CategoryName)
+        public async Task<ActionResult<OperationResult>> GetAllByCategoryNameAsync(string CategoryName)
         {
-            var operationResult = await _productManager.GetProductsByCategoryNameAsunc(CategoryName);
+            var operationResult = await _productManager.GetProductsByCategoryNameAsync(CategoryName);
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);
