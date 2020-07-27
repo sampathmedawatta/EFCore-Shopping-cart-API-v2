@@ -25,7 +25,7 @@ namespace OnlineShopping.Data.Repository
         }
 
 
-        public async Task<IEnumerable<ProductDto>> GetAllByFilterAsunc(string FilterBy)
+        public async Task<IEnumerable<ProductDto>> GetAllByFilterAsync(string FilterBy)
         {
 
             if (FilterBy.Equals("FeatureProducts"))
@@ -53,7 +53,7 @@ namespace OnlineShopping.Data.Repository
             return null;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllByCategoryNameAsunc(string CategoryName)
+        public async Task<IEnumerable<ProductDto>> GetAllByCategoryNameAsync(string CategoryName)
         {
 
             var productList = await table
