@@ -7,7 +7,7 @@ namespace OnlineShopping.Data.Repository.Interfaces
 {
     public interface IProductRepository<T> : IRepository<T> where T : class
     {
-        Task<IEnumerable<ProductDto>> GetAllByFilterAsunc(string FilterBy);
-        Task<IEnumerable<ProductDto>> GetAllByCategoryNameAsunc(string CategoryName);
+        Task<IEnumerable<ProductDto>> GetAllByFilterAsync(string FilterBy);
+        Task<IEnumerable<ProductDto>> GetAllByCategoryNameAsync(string CategoryName);
     }
 }

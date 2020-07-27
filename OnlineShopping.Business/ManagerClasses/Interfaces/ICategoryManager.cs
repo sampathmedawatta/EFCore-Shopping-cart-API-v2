@@ -5,6 +5,6 @@ namespace OnlineShopping.Business.Interfaces.ManagerClasses
 {
     public interface ICategoryManager
     {
-        Task<OperationResult> GetCategoriesAsunc();
+        Task<OperationResult> GetCategoriesAsync();
     }
 }

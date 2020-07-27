@@ -5,9 +5,9 @@ namespace OnlineShopping.Business.Interfaces.ManagerClasses
 {
     public interface IProductManager
     {
-        Task<OperationResult> GetProductsAsunc();
-        Task<OperationResult> GetProductsByOptionsAsunc(string option);
-        Task<OperationResult> GetProductsByCategoryNameAsunc(string Name);
+        Task<OperationResult> GetProductsAsync();
+        Task<OperationResult> GetProductsByOptionsAsync(string option);
+        Task<OperationResult> GetProductsByCategoryNameAsync(string Name);
 
     }
 }

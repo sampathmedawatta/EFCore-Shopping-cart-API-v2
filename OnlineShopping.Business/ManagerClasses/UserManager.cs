@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Options;
-using OnlineShopping.Business.ManagerClasses.Interfaces;
+﻿using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
 using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.User;
@@ -12,7 +10,7 @@ namespace OnlineShopping.Business.ManagerClasses
     public class UserManager : IUserManager
     {
         private IUnitOfWork _unitOfWork;
-        public UserManager(IUnitOfWork unitOfWork, IOptions<AppSettings> appSetting, IMapper mapper)
+        public UserManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
