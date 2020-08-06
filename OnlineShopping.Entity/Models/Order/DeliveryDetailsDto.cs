@@ -1,18 +1,13 @@
-﻿using System;
-using System.Text.Json.Serialization;
-using static OnlineShopping.Common.Enums;
+﻿using System.Text.Json.Serialization;
 
-namespace OnlineShopping.Entity.Models.User
+namespace OnlineShopping.Entity.Models.Order
 {
-    public class CustomerDto : UserDto
+    public class DeliveryDetailsDto
     {
-        [JsonIgnore]
-        public Guid Id { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        [JsonPropertyName("gender")]
-        public Gender Gender { get; set; }
         [JsonPropertyName("firstName")]
+
         public string FirstName { get; set; }
         [JsonPropertyName("lastName")]
         public string LastName { get; set; }
@@ -24,9 +19,5 @@ namespace OnlineShopping.Entity.Models.User
         public string State { get; set; }
         [JsonPropertyName("postCode")]
         public int PostCode { get; set; }
-        [JsonIgnore]
-        public Guid CustomerRoleId { get; set; }
-        [JsonIgnore]
-        public bool IsActive { get; set; }
     }
 }

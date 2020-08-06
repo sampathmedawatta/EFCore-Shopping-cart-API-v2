@@ -41,6 +41,7 @@ namespace OnlineShopping.API
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>

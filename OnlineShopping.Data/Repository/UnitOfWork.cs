@@ -6,6 +6,7 @@ using OnlineShopping.Data.Entity;
 using OnlineShopping.Data.Repository.GenericRepo;
 using OnlineShopping.Data.Repository.Interfaces;
 using OnlineShopping.Entity.Models.Category;
+using OnlineShopping.Entity.Models.Order;
 using OnlineShopping.Entity.Models.Product;
 using OnlineShopping.Entity.Models.User;
 
@@ -18,6 +19,7 @@ namespace OnlineShopping.Data.Repository
         public ICategoryRepository<CategoryDto> Categories { get; private set; }
         public IUserRepository<CustomerDto> Users { get; private set; }
 
+        public IOrderRepository<OrderDto> Orders { get; private set; }
         public IGenericRepository<CustomerEntry, UserGenericDto> UserGenericRepository { get; private set; }
         private OnlineShoppingContext Context
         {
@@ -34,7 +36,7 @@ namespace OnlineShopping.Data.Repository
             Products = new ProductRepository(Context, mapper);
             Categories = new CategoryRepository(Context, mapper);
             Users = new UserRepository(Context, mapper);
-
+            Orders = new OrderRepository(Context, mapper);
             UserGenericRepository = new CustomerRepository(Context, mapper);
 
         }
