@@ -17,6 +17,8 @@ namespace OnlineShopping.Data.Entity
         [ForeignKey("ProductId")]
         public ProductEntiry Product { get; set; }
         [Required]
+        public string ProductName { get; set; }
+        [Required]
         public int Qty { get; set; }
         [Required]
         public double UnitPrice { get; set; }
