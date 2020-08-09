@@ -9,8 +9,8 @@ namespace OnlineShopping.Entity.Models.Order
         [JsonIgnore]
         public Guid Id { get; set; }
 
-        [JsonPropertyName("paymentMethod")]
-        public string PaymentMethod { get; set; }
+        [JsonPropertyName("paymentMethodType")]
+        public string PaymentMethodType { get; set; }
         [JsonPropertyName("totalAmount")]
         public double TotalAmount { get; set; }
         [JsonPropertyName("tax")]
@@ -22,9 +22,6 @@ namespace OnlineShopping.Entity.Models.Order
 
         [JsonPropertyName("orderItems")]
         public List<OrderItemDto> OrderItems { get; set; }
-
-        [JsonIgnore]
-        public DateTime OrderDate { get; set; }
 
     }
 }

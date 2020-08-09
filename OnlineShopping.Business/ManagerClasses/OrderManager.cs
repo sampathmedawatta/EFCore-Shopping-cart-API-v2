@@ -21,13 +21,22 @@ namespace OnlineShopping.Business.ManagerClasses
 
             orderDto.Id = new Guid();
             bool result = await (_unitOfWork.Orders.Insert(orderDto)) > 0;
-
-            return validateResult(operationResult, result);
+            operationResult.Data = orderDto.Id;
+            return validateResult(operationResult);
         }
 
-        private OperationResult validateResult(OperationResult operationResult, bool result)
+        public async Task<OperationResult> GetOrderByIdAsync(Guid Id)
         {
-            if (result)
+            OperationResult operationResult = new OperationResult();
+
+            operationResult.Data = await _unitOfWork.Orders.GetByIdAsync(Id);
+
+            return validateResult(operationResult);
+        }
+
+        private OperationResult validateResult(OperationResult operationResult)
+        {
+            if (operationResult.Data != null)
             {
                 operationResult.StatusId = 200;
                 operationResult.Status = Enums.Status.Success;

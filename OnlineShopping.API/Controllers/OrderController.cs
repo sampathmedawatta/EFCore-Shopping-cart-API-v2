@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
 using OnlineShopping.Entity.Models.Order;
+using System;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -22,6 +21,28 @@ namespace OnlineShopping.API.Controllers
             _logger = logger;
             _orderManager = orderManager;
         }
+
+        /// <summary>
+        /// Method to get products
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        // GET: api/Order/gfgf=-23232-v-343
+        ///  [AllowAnonymous]
+        [HttpGet()]
+        public async Task<ActionResult<OperationResult>> GetAsync(Guid Id)
+        {
+            _logger.LogInformation("Get order by id");
+            var operationResult = await _orderManager.GetOrderByIdAsync(Id);
+
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
+
+        }
+
 
         /// <summary>
         /// placeOrder

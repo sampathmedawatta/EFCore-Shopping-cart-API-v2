@@ -1,9 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace OnlineShopping.Entity.Models.Order
 {
     public class DeliveryDetailsDto
     {
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
         [JsonPropertyName("firstName")]
