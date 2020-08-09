@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopping.Entity.Models.PaymentMethod;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -6,11 +7,15 @@ namespace OnlineShopping.Entity.Models.Order
 {
     public class OrderDto
     {
-        [JsonIgnore]
+        [JsonPropertyName("id")]
         public Guid Id { get; set; }
 
-        [JsonPropertyName("paymentMethodType")]
-        public string PaymentMethodType { get; set; }
+        [JsonPropertyName("paymentMethodId")]
+        public Guid PaymentMethodId { get; set; }
+
+        [JsonPropertyName("paymentMethod")]
+        public PaymentMethodDto PaymentMethod { get; set; }
+
         [JsonPropertyName("totalAmount")]
         public double TotalAmount { get; set; }
         [JsonPropertyName("tax")]
@@ -22,6 +27,10 @@ namespace OnlineShopping.Entity.Models.Order
 
         [JsonPropertyName("orderItems")]
         public List<OrderItemDto> OrderItems { get; set; }
+
+        [JsonPropertyName("orderDate")]
+        public DateTime OrderDate { get; set; }
+
 
     }
 }

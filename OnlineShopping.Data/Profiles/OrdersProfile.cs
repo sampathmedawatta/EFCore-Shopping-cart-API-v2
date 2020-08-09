@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineShopping.Data.Entity;
 using OnlineShopping.Entity.Models.Order;
+using OnlineShopping.Entity.Models.PaymentMethod;
 
 namespace OnlineShopping.Data.Profiles
 {
@@ -13,8 +14,8 @@ namespace OnlineShopping.Data.Profiles
                 .ForMember(dest =>
                dest.Price,
                opt => opt.MapFrom(src => src.UnitPrice));
-
             CreateMap<OrderEntry, DeliveryDetailsDto>();
+            CreateMap<PaymentMethodEntry, PaymentMethodDto>();
             CreateMap<OrderEntry, OrderDto>()
             .ForMember(dest =>
             dest.TotalAmount,
@@ -26,8 +27,14 @@ namespace OnlineShopping.Data.Profiles
             dest.Tax,
             opt => opt.MapFrom(src => src.Tax))
             .ForMember(dest =>
-            dest.PaymentMethodType,
-            opt => opt.MapFrom(src => src.PaymentMethod.Name))
+                dest.PaymentMethodId,
+                opt => opt.MapFrom(src => src.PaymentMethodId))
+            .ForMember(dest =>
+                dest.OrderDate,
+                opt => opt.MapFrom(src => src.OrderDate))
+             .ForMember(dest =>
+             dest.PaymentMethod,
+             opt => opt.MapFrom(src => src.PaymentMethod))
              .ForMember(dest =>
             dest.DeliveryDetails,
             opt => opt.MapFrom(src => src))
@@ -52,6 +59,9 @@ namespace OnlineShopping.Data.Profiles
                 .ForMember(dest =>
                 dest.Tax,
                 opt => opt.MapFrom(src => src.Tax))
+                 .ForMember(dest =>
+                dest.PaymentMethodId,
+                opt => opt.MapFrom(src => src.PaymentMethodId))
                  .ForMember(dest =>
                 dest.CustomerId,
                 opt => opt.MapFrom(src => src.DeliveryDetails.Id))

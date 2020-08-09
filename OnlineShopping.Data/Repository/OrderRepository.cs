@@ -43,7 +43,7 @@ namespace OnlineShopping.Data.Repository
             orderEntry = _mapper.Map<OrderDto, OrderEntry>(entity);
 
             //TODO set payment method and order status
-            orderEntry.PaymentMethodId = Guid.Parse("5771e231-bace-44cb-80e2-2db0802cb29f");
+            //orderEntry.PaymentMethodId = Guid.Parse("5771e231-bace-44cb-80e2-2db0802cb29f");
             orderEntry.OrderStatusId = Guid.Parse("d03cce15-f001-4a41-a4e1-367876d58437");
             orderEntry.OrderDate = DateTime.Now;
             orderEntry.DiscountTotal = 0;
