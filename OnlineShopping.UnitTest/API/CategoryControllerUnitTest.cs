@@ -24,7 +24,7 @@ namespace OnlineShopping.UnitTest.API
         {
             _categoryManager = new Mock<ICategoryManager>();
             _logger = new Mock<ILogger<CategoryController>>();
-            _categoryManager.Setup(x => x.GetCategoriesAsunc()).ReturnsAsync(() =>
+            _categoryManager.Setup(x => x.GetCategoriesAsync()).ReturnsAsync(() =>
             {
                 return new OperationResult
                 {
@@ -82,7 +82,7 @@ namespace OnlineShopping.UnitTest.API
             _controller = new CategoryController(_categoryManager.Object, _logger.Object);
 
             //Act
-            dynamic result = await _controller.GetAsunc();
+            dynamic result = await _controller.GetAsync();
 
             //Assert
             Assert.AreEqual(200, result.Result.Value.StatusId);
@@ -94,7 +94,7 @@ namespace OnlineShopping.UnitTest.API
         public async Task GetAsunc_WhenDataNotFound_Return400BadRequestOptionResult()
         {
             //Arrange
-            _categoryManager.Setup(x => x.GetCategoriesAsunc()).ReturnsAsync(() =>
+            _categoryManager.Setup(x => x.GetCategoriesAsync()).ReturnsAsync(() =>
             {
                 return new OperationResult
                 {
@@ -109,7 +109,7 @@ namespace OnlineShopping.UnitTest.API
             _controller = new CategoryController(_categoryManager.Object, _logger.Object);
 
             //Act
-            dynamic result = await _controller.GetAsunc();
+            dynamic result = await _controller.GetAsync();
 
             //Assert
             Assert.AreEqual(400, result.Result.Value.StatusId);
