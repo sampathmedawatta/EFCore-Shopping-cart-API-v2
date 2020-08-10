@@ -3,16 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using OnlineShopping.API.Auth;
+using OnlineShopping.API.Auth.Interfaces;
 using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
 using OnlineShopping.Entity.Models;
 using OnlineShopping.Entity.Models.User;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OnlineShopping.API.Controllers
@@ -22,12 +20,16 @@ namespace OnlineShopping.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly ITokenGenerator _tokenGenerator;
+        private readonly ITokenRefresher _tokenRefresher;
         private readonly ApplicationSettings _appsettings;
         private readonly IUserManager _userManager;
         private readonly ILogger _logger;
 
-        public UserController(IUserManager userManager, IOptions<ApplicationSettings> appsettings, ILogger<UserController> logger)
+        public UserController(IUserManager userManager, ITokenGenerator tokenGenerator, ITokenRefresher tokenRefresher, IOptions<ApplicationSettings> appsettings, ILogger<UserController> logger)
         {
+            _tokenGenerator = tokenGenerator;
+            _tokenRefresher = tokenRefresher;
             _appsettings = appsettings.Value;
             _userManager = userManager;
             _logger = logger;
@@ -97,29 +99,81 @@ namespace OnlineShopping.API.Controllers
         [Route("Login")]
 
         //POST : /api/User/Login
-        public async Task<IActionResult> LoginAsync(LoginDto loginDto)
+        public async Task<ActionResult<OperationResult>> LoginAsync(LoginDto loginDto)
         {
-            var user = await _userManager.GetByEmailAsync(loginDto.Email);
+            OperationResult operationResult = new OperationResult();
 
-            if (user != null && await _userManager.CheckPasswordAsync(user.Id, loginDto.Password))
+            if (loginDto.Email == null || loginDto.Password == null)
             {
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim("UserId", user.Id.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appsettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
+                operationResult.StatusId = 400;
+                operationResult.Status = Enums.Status.Error;
+                operationResult.Message = Constant.FailMessage;
+                operationResult.Error = "Incorrect Login request";
 
-                return Ok(new { token });
+                return BadRequest(operationResult);
             }
 
-            return BadRequest(new { message = "incorrect login details" });
+            var user = await _userManager.GetByEmailAsync(loginDto.Email);
+            if (user != null && await _userManager.CheckPasswordAsync(user.Id, loginDto.Password))
+            {
+                var key = _appsettings.JWT_Secret;
+                AuthanticationResponse authanticationResponse = _tokenGenerator.GenerateToken(key, user.Id);
+
+                if (authanticationResponse == null)
+                {
+                    operationResult.StatusId = 400;
+                    operationResult.Status = Enums.Status.Error;
+                    operationResult.Message = Constant.FailMessage;
+                    operationResult.Error = "No Records Found";
+
+                    return Unauthorized(operationResult);
+                }
+
+                operationResult.StatusId = 200;
+                operationResult.Status = Enums.Status.Success;
+                operationResult.Message = Constant.SuccessMessage;
+                operationResult.Data = authanticationResponse;
+
+                return Ok(operationResult);
+            }
+
+            operationResult.StatusId = 400;
+            operationResult.Status = Enums.Status.Error;
+            operationResult.Message = Constant.FailMessage;
+            operationResult.Error = "No Records Found";
+            return Unauthorized(operationResult);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RefreshTokenDto"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("RefreshToken")]
+        public async Task<ActionResult<OperationResult>> Refresh([FromBody] RefreshTokenDto refreshTokenDto)
+        {
+            var key = _appsettings.JWT_Secret;
+            OperationResult operationResult = new OperationResult();
+            AuthanticationResponse authanticationResponse = _tokenRefresher.Refresh(refreshTokenDto, key);
+
+            if (authanticationResponse == null)
+            {
+                operationResult.StatusId = 400;
+                operationResult.Status = Enums.Status.Error;
+                operationResult.Message = Constant.FailMessage;
+                operationResult.Error = "No Records Found";
+
+                return Unauthorized(operationResult);
+            }
+
+            operationResult.StatusId = 200;
+            operationResult.Status = Enums.Status.Success;
+            operationResult.Message = Constant.SuccessMessage;
+            operationResult.Data = authanticationResponse;
+
+            return Ok(operationResult);
         }
     }
 }
