@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using OnlineShopping.API.Auth;
+using OnlineShopping.API.Auth.Interfaces;
 using OnlineShopping.API.Exception;
 using OnlineShopping.Business.Interfaces.ManagerClasses;
 using OnlineShopping.Business.ManagerClasses;
@@ -38,11 +40,14 @@ namespace OnlineShopping.API
             services.AddControllers();
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddScoped<IProductManager, ProductManager>();
-            services.AddScoped<ICategoryManager, CategoryManager>();
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<IOrderManager, OrderManager>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IProductManager, ProductManager>();
+            services.AddSingleton<ICategoryManager, CategoryManager>();
+            services.AddSingleton<IUserManager, UserManager>();
+            services.AddSingleton<IOrderManager, OrderManager>();
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<ITokenGenerator, TokenGenerator>();
+            services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
+            services.AddSingleton<ITokenRefresher, TokenRefresher>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
