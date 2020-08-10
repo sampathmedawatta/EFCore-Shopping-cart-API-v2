@@ -24,6 +24,28 @@ namespace OnlineShopping.Data.Repository
             _mapper = mapper;
         }
 
+
+        public async Task<IEnumerable<OrderDto>> GetAllAsync()
+        {
+            var orderList = await table
+                   .Include(I => I.OrderItemEntries)
+                .Include(p => p.PaymentMethod)
+                .Include(s => s.OrderStatus)
+                   .ToListAsync();
+            return _mapper.Map<IEnumerable<OrderDto>>(orderList);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetAllByCustomerIdAsync(Guid id)
+        {
+            var orderList = await table
+                   .Include(I => I.OrderItemEntries)
+                .Include(p => p.PaymentMethod)
+                .Include(s => s.OrderStatus)
+                .Where(o => o.CustomerId.Equals(id))
+                   .ToListAsync();
+            return _mapper.Map<IEnumerable<OrderDto>>(orderList);
+        }
+
         public async Task<OrderDto> GetByIdAsync(Guid id)
         {
             var order = await table
@@ -61,10 +83,6 @@ namespace OnlineShopping.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<OrderDto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
 
 
 

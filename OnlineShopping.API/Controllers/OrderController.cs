@@ -45,6 +45,27 @@ namespace OnlineShopping.API.Controllers
 
 
         /// <summary>
+        /// Method to get products
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        // GET: api/Order/History/gfgf=-23232-v-343
+        ///  [AllowAnonymous]
+        [HttpGet("History")]
+        public async Task<ActionResult<OperationResult>> GetAllByCustomerIdAsync(Guid Id)
+        {
+            _logger.LogInformation("Get order by id");
+            var operationResult = await _orderManager.GetAllByCustomerIdAsync(Id);
+
+            if (operationResult.Data == null)
+            {
+                return NotFound(operationResult);
+            }
+            return Ok(operationResult);
+
+        }
+
+        /// <summary>
         /// placeOrder
         /// </summary>
         /// <param name="orderDto"></param>

@@ -25,6 +25,14 @@ namespace OnlineShopping.Business.ManagerClasses
             return validateResult(operationResult);
         }
 
+        public async Task<OperationResult> GetAllByCustomerIdAsync(Guid Id)
+        {
+            OperationResult operationResult = new OperationResult();
+
+            operationResult.Data = await _unitOfWork.Orders.GetAllByCustomerIdAsync(Id);
+
+            return validateResult(operationResult);
+        }
         public async Task<OperationResult> GetOrderByIdAsync(Guid Id)
         {
             OperationResult operationResult = new OperationResult();
