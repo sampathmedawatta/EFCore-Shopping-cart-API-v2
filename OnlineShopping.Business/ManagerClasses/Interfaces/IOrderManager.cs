@@ -9,5 +9,7 @@ namespace OnlineShopping.Business.ManagerClasses.Interfaces
     {
         Task<OperationResult> CreateOrderAsync(OrderDto orderDto);
         Task<OperationResult> GetOrderByIdAsync(Guid Id);
+        Task<OperationResult> GetAllByCustomerIdAsync(Guid Id);
+
     }
 }
