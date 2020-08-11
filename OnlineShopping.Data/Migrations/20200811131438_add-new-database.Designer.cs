@@ -10,8 +10,8 @@ using OnlineShopping.Data.Context;
 namespace OnlineShopping.Data.Migrations
 {
     [DbContext(typeof(OnlineShoppingContext))]
-    [Migration("20200806220025_updateOrderDetails")]
-    partial class updateOrderDetails
+    [Migration("20200811131438_add-new-database")]
+    partial class addnewdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,9 +107,13 @@ namespace OnlineShopping.Data.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 

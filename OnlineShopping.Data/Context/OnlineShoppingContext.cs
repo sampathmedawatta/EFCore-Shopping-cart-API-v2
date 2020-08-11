@@ -20,15 +20,12 @@ namespace OnlineShopping.Data.Context
         public DbSet<OrderEntry> Orders { get; set; }
         public DbSet<OrderItemEntry> OrderItems { get; set; }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
         {
             if (!optionsbuilder.IsConfigured)
             {
                 optionsbuilder.UseSqlServer(_ConnectionString);
             }
-
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

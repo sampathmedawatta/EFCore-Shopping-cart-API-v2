@@ -140,7 +140,7 @@ namespace OnlineShopping.API.Controllers
             operationResult.StatusId = 400;
             operationResult.Status = Enums.Status.Error;
             operationResult.Message = Constant.FailMessage;
-            operationResult.Error = "No Records Found";
+            operationResult.Error = "Invalid login details";
             return Unauthorized(operationResult);
         }
 
@@ -152,7 +152,7 @@ namespace OnlineShopping.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("RefreshToken")]
-        public async Task<ActionResult<OperationResult>> Refresh([FromBody] RefreshTokenDto refreshTokenDto)
+        public ActionResult<OperationResult> Refresh([FromBody] RefreshTokenDto refreshTokenDto)
         {
             var key = _appsettings.JWT_Secret;
             OperationResult operationResult = new OperationResult();

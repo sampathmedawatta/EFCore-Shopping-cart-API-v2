@@ -13,7 +13,10 @@ namespace OnlineShopping.Data.Entity
         [ForeignKey("CustomerId")]
         public CustomerEntry Customer { get; set; }
         [Required]
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        [Required]
+        public byte[] PasswordSalt { get; set; }
+
 
     }
 }
