@@ -23,8 +23,6 @@ namespace OnlineShopping.API.Controllers
 
         }
 
-
-
         /// <summary>
         /// Method to get products
         /// </summary>
@@ -45,37 +43,17 @@ namespace OnlineShopping.API.Controllers
 
         }
 
-
         /// <summary>
         /// Method to get Feature products
         /// </summary>
-        /// <param></param>
+        /// <param name="type"> FeatureProducts, HomePageProducts</param>
         /// <returns></returns>
-        // GET: api/Product/GetFeatureProducts/
+        // GET: api/Product/
 
-        [HttpGet("FeatureProducts")]
-        public async Task<ActionResult<OperationResult>> GetFeatureProductsAsync()
+        [HttpGet("ProductsByType/{type}")]
+        public async Task<ActionResult<OperationResult>> GetProductsByOptionAsync(string type)
         {
-            var operationResult = await _productManager.GetProductsByOptionsAsync("FeatureProducts");
-            if (operationResult.Data == null)
-            {
-                return NotFound(operationResult);
-            }
-            return Ok(operationResult);
-        }
-
-
-        /// <summary>
-        /// Method to get Home Page products
-        /// </summary>
-        /// <param></param>
-        /// <returns></returns>
-        // GET: api/Product/GetHomePageProducts/
-
-        [HttpGet("HomePageProducts")]
-        public async Task<ActionResult<OperationResult>> GetHomePageProductsAsync()
-        {
-            var operationResult = await _productManager.GetProductsByOptionsAsync("HomePageProducts");
+            var operationResult = await _productManager.GetProductsByOptionsAsync(type);
             if (operationResult.Data == null)
             {
                 return NotFound(operationResult);
@@ -88,7 +66,7 @@ namespace OnlineShopping.API.Controllers
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        // GET: api/Product/GetHomePageProducts/
+        // GET: api/Product/ProductsByCategoryName/
 
         [HttpGet("ProductsByCategory/{CategoryName}", Name = "ProductsByCategoryName")]
         public async Task<ActionResult<OperationResult>> GetAllByCategoryNameAsync(string CategoryName)

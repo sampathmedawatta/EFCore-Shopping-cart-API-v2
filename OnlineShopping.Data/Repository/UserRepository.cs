@@ -40,19 +40,27 @@ namespace OnlineShopping.Data.Repository
         public async Task<bool> CheckPasswordAsync(Guid id, string password)
         {
             var customerPassword = await this.context.CustomerPasswords.Where(c => c.CustomerId == id).FirstOrDefaultAsync();
-            if (customerPassword != null && customerPassword.Password == password)
+            if (customerPassword == null)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            if (!VerifyPassword(password, customerPassword.PasswordHash, customerPassword.PasswordSalt))
+                return false;
+
+            return true;
         }
 
         public async Task<int> Insert(CustomerDto entity)
         {
-
             CustomerPasswordEntry customerPasswordEntry;
             customerPasswordEntry = _mapper.Map<UserDto, CustomerPasswordEntry>(entity);
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(entity.Password, out passwordHash, out passwordSalt);
+
+            customerPasswordEntry.PasswordHash = passwordHash;
+            customerPasswordEntry.PasswordSalt = passwordSalt;
 
             this.context.Set<CustomerPasswordEntry>().Add(customerPasswordEntry);
             int excecutedRows = await this.context.SaveChangesAsync();
@@ -73,12 +81,32 @@ namespace OnlineShopping.Data.Repository
         }
 
 
-
-
-
         public void Update(CustomerDto entity)
         {
             throw new NotImplementedException();
         }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); // Create hash using password salt.
+                for (int i = 0; i < computedHash.Length; i++)
+                { // Loop through the byte array
+                    if (computedHash[i] != passwordHash[i]) return false; // if mismatch
+                }
+            }
+            return true; //if no mismatches.
+        }
+
     }
 }

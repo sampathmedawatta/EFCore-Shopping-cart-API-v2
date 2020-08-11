@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShopping.Data.Migrations
 {
-    public partial class updateOrderDetails : Migration
+    public partial class addnewdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -166,7 +166,8 @@ namespace OnlineShopping.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: false),
-                    Password = table.Column<string>(nullable: false)
+                    Password = table.Column<byte[]>(nullable: false),
+                    PasswordSalt = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
