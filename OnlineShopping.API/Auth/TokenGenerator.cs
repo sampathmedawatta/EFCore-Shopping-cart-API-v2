@@ -54,7 +54,7 @@ namespace OnlineShopping.API.Auth
             {
                 Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, id.ToString())
+                        new Claim("UserId", id.ToString())
                     }),
                 Expires = DateTime.UtcNow.AddMinutes(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)), SecurityAlgorithms.HmacSha256Signature)
