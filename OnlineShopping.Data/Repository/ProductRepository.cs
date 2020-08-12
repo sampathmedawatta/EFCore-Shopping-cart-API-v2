@@ -50,6 +50,18 @@ namespace OnlineShopping.Data.Repository
                 return _mapper.Map<IEnumerable<ProductDto>>(productList);
             }
 
+            else if (FilterBy.Equals("All"))
+            {
+                var productList = await table
+               .Include(c => c.Category)
+               .Include(u => u.UnitType)
+               .Include(p => p.Picture)
+               .Where(p => p.ShowInHomePage.Equals(true))
+               .Where(p => p.IsFeatureProduct.Equals(true))
+               .Where(p => p.IsActive.Equals(true)).ToListAsync();
+                return _mapper.Map<IEnumerable<ProductDto>>(productList);
+            }
+
             return null;
         }
 
