@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OnlineShopping.Business.ManagerClasses.Interfaces;
 using OnlineShopping.Common;
 using OnlineShopping.Entity.Models.Order;
 using System;
+
 using System.Threading.Tasks;
 
 namespace OnlineShopping.API.Controllers
 {
     [Route("api/[controller]")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -71,7 +74,6 @@ namespace OnlineShopping.API.Controllers
         /// <param name="orderDto"></param>
         /// <returns></returns>
         [HttpPost]
-
         public async Task<ActionResult<OperationResult>> placeOrder([FromBody] OrderDto orderDto)
         {
             _logger.LogInformation("Create new order");
